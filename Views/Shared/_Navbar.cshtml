@@ -1,0 +1,35 @@
+﻿@using QLNS.Code
+<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/Home"><img src="~/Assets/img/logo.png" /></a>
+        <a class="navbar-brand" href="/Home"><h4>Nhà sách Số 23</h4></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse multi-collaps" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/Genre">Thể loại</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Supplier">Nhà cung cấp</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Promotion">Khuyến mãi</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Sale">Nhập xuất</a></li>
+                @if (SessionHelper.GetPermission() == "admin") {<li class="nav-item"><a class="nav-link" href="/Staff">Nhân viên</a></li>}
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#collapseAccount" role="button"
+                       aria-expanded="false" aria-controls="collapseAccount">
+                        <text>Chào!</text> @SessionHelper.GetSession().Get()
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--collapse-->
+        <div class="collapse" id="collapseAccount">
+            <div class="nav-item">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/Auth/ChangePassword">Đổi MK</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Auth/Logout">Đăng xuất</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+

@@ -1,0 +1,71 @@
+﻿@model QLNS.TAI_KHOAN
+
+@{
+    ViewBag.Title = "Tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="page-section">
+    <div class="container">
+        <div class="d-flex">
+            <div class="flex-grow-1">
+                <h2>Tạo tài khoản</h2>
+            </div>
+            <div class="control-button">
+                <a class="control-link text-info" href="/Staff">
+                    <i class="fa-solid fa-arrow-left"></i> Trở về
+                </a>
+            </div>
+        </div>
+        <div class="row m-3 border-bottom border-info"></div>
+        <div class="col col-form">
+            @if (ViewBag.error != null)
+            {<div class="alert alert-danger">@ViewBag.error</div>}
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <input type="hidden" name="MA_NV" value="@ViewBag.manv" />
+                <div class="form-outline mb-3">
+                    <label>Tên tài khoản</label>
+                    @Html.TextBoxFor(m => Model.USERNAME,
+                        new
+                        {
+                            @class = "form-control form-control-lg",
+                            @type = "text",
+                            @autocomplete = false,
+                            @required = true,
+                        })
+                </div>
+                <div class="form-outline mb-3">
+                    <label>Mật khẩu</label>
+                    @Html.TextBoxFor(m => Model.PASSWORD,
+                        new
+                        {
+                            @class = "form-control form-control-lg",
+                            @type = "password",
+                            @autocomplete = false,
+                            @required = true,
+                        })
+                    @Html.ValidationMessageFor(m => Model.PASSWORD, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-outline mb-3">
+                    <label>Nhập lại mật khẩu</label>
+                    <input class="form-control form-control-lg" type="password" name="REPASSWORD" required />
+                </div>
+                <div class="form-outline mb-3">
+                    <label>Quyền</label>
+                    <select class="form-control form-control-lg" name="QUYEN">
+                        <option value="user">Nhân viên</option>
+                        <option value="manager">Quản lý</option>
+                        <option value="owner">Chủ cửa hàng</option>
+                        <option value="admin">Quản trị viên</option>
+                    </select>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Tạo tài khoản</button>
+                </div>
+            }
+        </div>
+    </div>
+</section>

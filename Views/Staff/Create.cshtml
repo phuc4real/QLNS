@@ -1,0 +1,98 @@
+﻿@model QLNS.NHAN_VIEN
+
+@{
+    ViewBag.Title = "Nhân viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="page-section">
+    <div class="container">
+        <div class="d-flex">
+            <div class="flex-grow-1">
+                <h2>Thêm nhân viên</h2>
+            </div>
+            <div class="control-button">
+                <a class="control-link text-info" href="/Staff">
+                    <i class="fa-solid fa-arrow-left"></i> Trở về
+                </a>
+            </div>
+        </div>
+        <div class="row m-3 border-bottom border-info"></div>
+        <div class="col col-form">
+            @if (ViewBag.error != null)
+            {<div class="alert alert-danger">@ViewBag.error</div>}
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label>Mã nhân viên</label>
+                    <div class="form-outline">
+                        @Html.TextBoxFor(m => Model.MA_NV,
+                        new
+                        {
+                            @class = "form-control",
+                            @type = "text",
+                            @required = true
+                        })
+                        @Html.ValidationMessageFor(model => model.MA_NV, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Tên nhân viên</label>
+                    <div class="form-outline">
+                        @Html.TextBoxFor(m => Model.TEN_NV,
+                        new
+                        {
+                            @class = "form-control",
+                            @type = "text",
+                            @required = true
+                        })
+                        @Html.ValidationMessageFor(model => model.TEN_NV, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Nơi sống</label>
+                    <div class="form-outline">
+                        @Html.TextBoxFor(m => Model.NOI_SONG,
+                        new
+                        {
+                            @class = "form-control",
+                            @type = "text",
+                            @required = true
+                        })
+                        @Html.ValidationMessageFor(model => model.NOI_SONG, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Năm sinh</label>
+                    <div class="form-outline">
+                        @Html.TextBoxFor(m => Model.NAM_SINH,
+                        new
+                        {
+                            @class = "form-control",
+                            @type = "date",
+                            @required = true
+                        })
+                        @Html.ValidationMessageFor(model => model.NAM_SINH, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <div class="form-outline mb-4">
+                        @Html.TextBoxFor(m => Model.SDT,
+                        new
+                        {
+                            @class = "form-control",
+                            @type = "text",
+                            @required = true
+                        })
+                        @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success btn-lg btn-block">Thêm nhân viên</button>
+                </div>
+            }
+        </div>
+    </div>
+</section>

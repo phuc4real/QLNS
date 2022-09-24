@@ -1,0 +1,87 @@
+﻿@model PagedList.IPagedList<QLNS.NHAN_VIEN>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Nhân viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    function itemID(id) {
+        $("#deleteForm").attr('action', '/Staff/Delete/' + id);
+    }
+</script>
+
+<section class="page-section">
+    <div class="container">
+        <div class="d-flex">
+            <div class="flex-grow-1">
+                <h2>Quản lý nhân viên</h2>
+            </div>
+            <div class="control-button text-success">
+                <a class="control-link text-success" href="/Staff/Create">
+                    <i class="fa-sharp fa-solid fa-plus"></i> Thêm
+                </a>
+            </div>
+        </div>
+        <div class="row m-3 border-bottom border-info"></div>
+        <div class="staff">
+            <div class="list-staff">
+                <ul>
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <div class="item-staff">
+                                <div class="staff-image">
+                                    <div class="staff-img">
+                                        <img src="~/Assets/img/staff.png">
+                                    </div>
+                                </div>
+                                <div class="staff-info">
+                                    <div class="staff-content">
+                                        <h3>@Html.DisplayFor(modelItem => item.TEN_NV)</h3>
+                                        @if (item.MA_NV.Contains("NV"))
+                                        {<p>Nhân viên</p>}
+                                        @if (item.MA_NV.Contains("QTV"))
+                                        {<p>Quản trị viên</p>}
+                                        @if (item.MA_NV.Contains("QL"))
+                                        {<p>Quản lý</p>}
+                                        @if (item.MA_NV.Contains("CCH"))
+                                        {<p>Chủ cửa hàng</p>}
+                                    </div>
+                                    <div class="staff-footer">
+                                        <div class="staff-contact">
+                                            <div class="staff-address">
+                                                <i class="fa-sharp fa-solid fa-location-dot"></i>
+                                                <p>@Html.DisplayFor(modelItem => item.NOI_SONG)</p>
+                                            </div>
+                                            <div class="staff-phone">
+                                                <i class="fa-solid fa-phone"></i>
+                                                <p>@Html.DisplayFor(modelItem => item.SDT)</p>
+                                            </div>
+                                        </div>
+                                        <div class="staff-button">
+                                            <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="/Staff/Edit/@item.MA_NV"><i class="fa-regular fa-pen-to-square"></i></a>
+                                            @if (item.TAI_KHOAN.Count != 1)
+                                            {<a class="tool" href="/Auth/Create/@item.MA_NV" data-toggle="tooltip" title="Tạo tài khoản"><i class="fa-regular fa-id-card"></i></a>}
+                                            <a role="button" class="tool" data-toggle="tooltip" title="Xoá nhân viên" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="itemID('@item.MA_NV')"><i class="fa-solid fa-trash"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="d-flex flex-row-reverse">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+   {
+       DisplayLinkToIndividualPages = true,
+       DisplayPageCountAndCurrentLocation = false,
+       MaximumPageNumbersToDisplay = 3,
+       LiElementClasses = new string[] { "pagination-item" }
+   })
+        </div>
+        @Html.Partial("_DeleteModal")
+    </div>
+</section>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<QLNS.THE_LOAI>
+
+@{
+    ViewBag.Title = "Thể loại";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    function itemID(id) {
+        $("#deleteForm").attr('action', '/Genre/Delete/'+id);
+    }
+</script>
+<section class="page-section">
+    <div class="container">
+        <div class="d-flex">
+            <div class="flex-grow-1">
+                <h2>Quản lý thể loại</h2>
+            </div>
+            <div class="control-button text-success">
+                <a class="control-link text-success" href="/Genre/Create">
+                    <i class="fa-sharp fa-solid fa-plus"></i> Thêm
+                </a>
+            </div>
+        </div>
+        <div class="row m-3 border-bottom border-info"></div>
+        <div class="row border-dark">
+            <table class="table table-hover">
+                <tr>
+                    <th><h5>Mã thể loại</h5></th>
+                    <th><h5>Tên thể loại</h5></th>
+                    <th><h5>Công cụ</h5></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MA_TL)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TEN_TL)
+                        </td>
+                        <td>
+                            <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="/Genre/Edit/@item.MA_TL"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a role="button" class="tool" data-toggle="tooltip" title="Xoá thể loại" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="itemID('@item.MA_TL')"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        @Html.Partial("_DeleteModal")
+    </div>
+</section>

@@ -1,0 +1,49 @@
+﻿@model QLNS.THE_LOAI
+
+@{
+    ViewBag.Title = "Thể loại";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="page-section">
+    <div class="container">
+        <div class="d-flex">
+            <div class="flex-grow-1">
+                <h2>Thêm thể loại</h2>
+            </div>
+            <div class="control-button">
+                <a class="control-link text-info" href="/Genre">
+                    <i class="fa-solid fa-arrow-left"></i> Trở về
+                </a>
+            </div>
+        </div>
+        <div class="row m-3 border-bottom border-info"></div>
+        <div class="row genre-div">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label>Mã Thể loại</label>
+                        <div class="col-6">
+                            @Html.EditorFor(model => model.MA_TL, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.MA_TL, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tên Thể loại</label>
+                        <div class="col-6">
+                            @Html.EditorFor(model => model.TEN_TL, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TEN_TL, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Thêm" class="btn btn-default btn-success" />
+                        </div>
+                    </div>
+            }
+        </div>
+    </div>
+</section>

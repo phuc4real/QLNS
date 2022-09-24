@@ -1,0 +1,89 @@
+﻿@model QLNS.Models.LoginModel
+@using QLNS.Code
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang đăng nhập - Nhà sách Số 23</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/site.css" rel="stylesheet" />
+    <script src="/Scripts/modernizr-2.8.3.js"></script>
+</head>
+<body>
+    <section class="h-100 gradient-form" style="background-color: #eee;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-10">
+                    <div class="card rounded-3 text-black">
+                        <div class="row g-0">
+                            <div class="col-lg-6">
+                                <div class="card-body p-md-5 mx-md-4">
+                                    <div class="text-center">
+                                        <img src="~/Assets/img/logo.png" style="width: 185px;" alt="logo">
+                                        <h4 class="mt-1 mb-5 pb-1">Đăng nhập vào hệ thông</h4>
+                                    </div>
+                                    @if (ViewBag.error != null)
+                                    {<div class="alert alert-danger">@ViewBag.error</div>}
+                                    @if (ViewBag.message != null)
+                                    {<div class="alert alert-success">@ViewBag.message</div>}
+                                    @using (Html.BeginForm())
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="form-outline mb-4">
+                                            @Html.TextBoxFor(m => Model.Username, new
+                                       {
+                                           @class = "form-control",
+                                           @placeholder = "Tên đăng nhập",
+                                           @autofocus = "autofocus",
+                                           @id = "username",
+                                           @name = "username",
+                                           @required = true,
+                                       })
+                                            @Html.ValidationMessageFor(m => Model.Username, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            @Html.TextBoxFor(m => Model.Password,
+                                                new
+                                                {
+                                                    @class = "form-control",
+                                                    @type = "password",
+                                                    @name = "password",
+                                                    @placeholder = "Mật khẩu",
+                                                    @id = "password",
+                                                    @required = true,
+                                                })
+                                            @Html.ValidationMessageFor(m => Model.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="text-center pt-1 mb-5 pb-1">
+                                            <button class="btn btn-danger btn-block btn-lg gradient-custom mb-3" type="submit">ĐĂNG NHẬP</button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-center gradient-custom">
+                                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                                    <h2 class="mb-4">NHÀ SÁCH SỐ 23</h2>
+                                    <p class="mb-0">
+                                        Nhà sách dành cho bạn.
+                                        Đáp ứng tất cả các yêu cầu về sách.
+                                        Hàng ngàn sản phẩm chính hãng, nhiều ưu đãi bất ngờ.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="/Scripts/jquery-3.6.0.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+</body>
+</html>

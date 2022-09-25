@@ -1,8 +1,8 @@
-﻿@model PagedList.IPagedList<QLNS.NHAN_VIEN>
+﻿@model PagedList.IPagedList<QLNS.NHA_CUNG_CAP>
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Nhân viên";
+    ViewBag.Title = "Nhà cung cấp";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script>
@@ -15,10 +15,10 @@
     <div class="container">
         <div class="d-flex">
             <div class="flex-grow-1">
-                <h2>Quản lý nhân viên</h2>
+                <h2>Quản lý nhà cung cấp</h2>
             </div>
             <div class="control-button text-success">
-                <a class="control-link text-success" href="/Staff/Create">
+                <a class="control-link text-success" href="/Supplier/Create">
                     <i class="fa-sharp fa-solid fa-plus"></i> Thêm
                 </a>
             </div>
@@ -38,32 +38,23 @@
                                 </div>
                                 <div class="custom-item-info">
                                     <div class="custom-item-content">
-                                        <h3>@Html.DisplayFor(modelItem => item.TEN_NV)</h3>
-                                        @if (item.MA_NV.Contains("NV"))
-                                        {<p>Nhân viên</p>}
-                                        @if (item.MA_NV.Contains("QTV"))
-                                        {<p>Quản trị viên</p>}
-                                        @if (item.MA_NV.Contains("QL"))
-                                        {<p>Quản lý</p>}
-                                        @if (item.MA_NV.Contains("CCH"))
-                                        {<p>Chủ cửa hàng</p>}
+                                        <h3>@Html.DisplayFor(modelItem => item.TEN_NCC)</h3>
+                                        <p>@Html.DisplayFor(modelItem => item.MA_NCC)</p>
                                     </div>
                                     <div class="custom-item-footer">
                                         <div class="custom-item-contact">
                                             <div class="custom-item-address">
                                                 <i class="fa-sharp fa-solid fa-location-dot"></i>
-                                                <p>@Html.DisplayFor(modelItem => item.NOI_SONG)</p>
+                                                <p>@Html.DisplayFor(modelItem => item.DIACHI)</p>
                                             </div>
                                             <div class="custom-item-phone">
                                                 <i class="fa-solid fa-phone"></i>
-                                                <p>@Html.DisplayFor(modelItem => item.SDT)</p>
+                                                <p>@Html.DisplayFor(modelItem => item.LIENLAC)</p>
                                             </div>
                                         </div>
                                         <div class="custom-item-button">
-                                            <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="/Staff/Edit/@item.MA_NV"><i class="fa-regular fa-pen-to-square"></i></a>
-                                            @if (item.TAI_KHOAN.Count != 1)
-                                            {<a class="tool" href="/Auth/Create/@item.MA_NV" data-toggle="tooltip" title="Tạo tài khoản"><i class="fa-regular fa-id-card"></i></a>}
-                                            <a role="button" class="tool" data-toggle="tooltip" title="Xoá nhân viên" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="itemID('@item.MA_NV')"><i class="fa-solid fa-trash"></i></a>
+                                            <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="/Staff/Edit/@item.MA_NCC"><i class="fa-regular fa-pen-to-square"></i></a>
+                                            <a role="button" class="tool" data-toggle="tooltip" title="Xoá nhân viên" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="itemID('@item.MA_NCC')"><i class="fa-solid fa-trash"></i></a>
                                         </div>
                                     </div>
                                 </div>

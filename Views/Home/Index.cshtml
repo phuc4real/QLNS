@@ -14,7 +14,8 @@
             <div class="control-button">Tìm kiếm</div>
             <div class="control-button text-success">
                 <a class="control-link text-success" href="/Book/Create">
-                    <i class="fa-sharp fa-solid fa-plus"></i>Thêm</a>
+                    <i class="fa-sharp fa-solid fa-plus"></i>Thêm
+                </a>
             </div>
         </div>
         <div class="row m-3 border-bottom border-info"></div>
@@ -45,14 +46,13 @@
             }
         </div>
         <div class="d-flex flex-row-reverse">
-            <div>
-                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-            </div>
-        </div>
-        <div class="d-flex flex-row-reverse">
-            <div class="p-2">
-                <div> Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</div>
-            </div>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+   {
+       DisplayLinkToIndividualPages = true,
+       DisplayPageCountAndCurrentLocation = false,
+       MaximumPageNumbersToDisplay = 3,
+       LiElementClasses = new string[] { "pagination-item" }
+   })
         </div>
     </div>
 </section>

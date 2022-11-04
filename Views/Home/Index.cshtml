@@ -5,6 +5,7 @@
     ViewBag.Title = "Sách";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <section class="section-products">
     <div class="container">
         <div class="d-flex">
@@ -34,8 +35,9 @@
                                 <img src="@Url.Content("~/Assets/img/book/default.jpg")" />
                             }
                             <ul>
-                                <li><a href="@Url.Action("Details","Product", new { id = item.MA_SACH })"><i class="fas fa-expand"></i></a></li>
-                                <li><a onclick="AddToCart('@item.MA_SACH')"><i class="fas fa-minus"></i></a></li>
+                                <li><a href="@Url.Action("Details","Home", new { id = item.MA_SACH })"><i class="fas fa-expand"></i></a></li>
+                                <li><a onclick="AddToCart('@item.MA_SACH')"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a role="button" class="tool" data-toggle="tooltip" title="Xoá sách" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="itemID('@item.MA_SACH')"><i class="fas fa-minus"></i></a></li>
                             </ul>
                         </div>
                         <div class="part-2">
@@ -54,5 +56,6 @@
        LiElementClasses = new string[] { "pagination-item" }
    })
         </div>
+        @Html.Partial("_DeleteModal")
     </div>
 </section>

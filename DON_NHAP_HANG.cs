@@ -17,7 +17,7 @@ namespace QLNS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DON_NHAP_HANG()
         {
-            this.CHI_TIET_NHAP_HANG = new HashSet<CHI_TIET_NHAP_HANG>();
+            this.SACHes = new HashSet<SACH>();
             this.NHA_CUNG_CAP = new HashSet<NHA_CUNG_CAP>();
         }
     
@@ -25,9 +25,9 @@ namespace QLNS
         public string MA_NV { get; set; }
         public Nullable<System.DateTime> NGAY_NHAP { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CHI_TIET_NHAP_HANG> CHI_TIET_NHAP_HANG { get; set; }
         public virtual NHAN_VIEN NHAN_VIEN { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SACH> SACHes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NHA_CUNG_CAP> NHA_CUNG_CAP { get; set; }
     }

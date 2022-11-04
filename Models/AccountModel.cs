@@ -5,10 +5,10 @@ namespace QLNS.Models
 {
     public class AccountModel
     {
-        private readonly csdlEntities context = null;
+        private readonly CSDLEntities context = null;
         public AccountModel()
         {
-            context = new csdlEntities();
+            context = new CSDLEntities();
         }
         //Lay quyen cua tai khoan
         public string GetPermission(string userName)

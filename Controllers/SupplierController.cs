@@ -10,7 +10,7 @@ namespace QLNS.Controllers
 {
     public class SupplierController : Controller
     {
-        private readonly csdlEntities db = new csdlEntities();
+        private readonly CSDLEntities db = new CSDLEntities();
 
         public ActionResult IsLogin()
         {

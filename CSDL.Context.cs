@@ -15,10 +15,10 @@ namespace QLNS
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class csdlEntities : DbContext
+    public partial class CSDLEntities : DbContext
     {
-        public csdlEntities()
-            : base("name=csdlEntities")
+        public CSDLEntities()
+            : base("name=CSDLEntities")
         {
         }
     
@@ -27,8 +27,6 @@ namespace QLNS
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CHI_TIET_HOA_DON> CHI_TIET_HOA_DON { get; set; }
-        public virtual DbSet<CHI_TIET_NHAP_HANG> CHI_TIET_NHAP_HANG { get; set; }
         public virtual DbSet<DANG_SACH> DANG_SACH { get; set; }
         public virtual DbSet<DON_NHAP_HANG> DON_NHAP_HANG { get; set; }
         public virtual DbSet<HOA_DON> HOA_DON { get; set; }

@@ -11,7 +11,7 @@ namespace QLNS.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly csdlEntities db = new csdlEntities();
+        private readonly CSDLEntities db = new CSDLEntities();
         //Ma hoa SHA256
         static string Sha256(string str)
         {

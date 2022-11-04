@@ -12,7 +12,7 @@ namespace QLNS.Controllers
     public class StaffController : Controller
     {
 
-        private readonly csdlEntities db = new csdlEntities();
+        private readonly CSDLEntities db = new CSDLEntities();
 
         public ActionResult LoginPermission()
         {

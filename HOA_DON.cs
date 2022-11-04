@@ -17,15 +17,15 @@ namespace QLNS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public HOA_DON()
         {
-            this.CHI_TIET_HOA_DON = new HashSet<CHI_TIET_HOA_DON>();
+            this.SACHes = new HashSet<SACH>();
         }
     
         public string MA_HD { get; set; }
         public string MA_NV { get; set; }
         public Nullable<System.DateTime> NGAY_LAP { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CHI_TIET_HOA_DON> CHI_TIET_HOA_DON { get; set; }
         public virtual NHAN_VIEN NHAN_VIEN { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SACH> SACHes { get; set; }
     }
 }

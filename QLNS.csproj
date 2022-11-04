@@ -142,18 +142,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="CHI_TIET_HOA_DON.cs">
-      <DependentUpon>CSDL.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CHI_TIET_NHAP_HANG.cs">
-      <DependentUpon>CSDL.tt</DependentUpon>
-    </Compile>
     <Compile Include="Code\SessionHelper.cs" />
     <Compile Include="Code\UserSession.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\PromotionController.cs" />
+    <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="CSDL.Context.cs">
@@ -230,8 +226,8 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="CSDL.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CSDL.Context.cs</LastGenOutput>
       <DependentUpon>CSDL.edmx</DependentUpon>
+      <LastGenOutput>CSDL.Context.cs</LastGenOutput>
     </Content>
     <Content Include="CSDL.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -241,13 +237,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <EntityDeploy Include="CSDL.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CSDL.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="CSDL.edmx.diagram">
-      <DependentUpon>CSDL.edmx</DependentUpon>
-    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -276,6 +265,13 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <EntityDeploy Include="CSDL.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CSDL.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="CSDL.edmx.diagram">
+      <DependentUpon>CSDL.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -317,6 +313,10 @@
     <Content Include="Views\Auth\Create.cshtml" />
     <Content Include="Views\Supplier\Index.cshtml" />
     <Content Include="Views\Supplier\_DeleteModal.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Home\_DeleteModal.cshtml" />
+    <Content Include="Views\Sale\Index.cshtml" />
+    <Content Include="Views\Promotion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

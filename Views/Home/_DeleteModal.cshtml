@@ -1,0 +1,21 @@
+﻿
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Xác nhận xoá</h5>
+            </div>
+            <div class="modal-body">
+                Bạn có chắn chắn muốn xoá sách và các thông tin liên quan đến sách này? <br /><span class="text-danger">Dữ liệu đã xoá không thể phục hồi.</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                @using (Html.BeginForm("Delete", "Home", FormMethod.Post, new { id = "deleteForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Xoá" id="submitButton" class="btn btn-danger" />
+                }
+            </div>
+        </div>
+    </div>
+</div>

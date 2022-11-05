@@ -1,59 +1,26 @@
 ﻿@model QLNS.SACH
 
 @{
-    ViewBag.Title = "Thông tin sách";
+    ViewBag.Title = "Thêm sách";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<script>
-    function enableEdit() {
-        $("#UP_ANH_BIA").removeAttr('hidden');
-        $("#Edit_Button").removeAttr('hidden');
-        $('#enable_Edit').attr('hidden', true);
-        $('#disable_Edit').removeAttr('hidden');
-        $("#TEN_SACH").removeAttr('readonly');
-        $("#MA_DS").removeAttr('Disabled');
-        $("#MA_TL").removeAttr('Disabled');
-        $("#GIA_BAN").removeAttr('readonly');
-        $("#TAC_GIA").removeAttr('readonly');
-        $("#NHA_XB").removeAttr('readonly');
-        $("#NAM_XB").removeAttr('readonly');
-        $("#SOLUONG").removeAttr('readonly');
-        $("#MO_TA_SACH").removeAttr('readonly');
-
-    }
-    function disableEdit() {
-        $("#UP_ANH_BIA").attr('hidden', true);
-        $("#Edit_Button").attr('hidden', true);
-        $('#enable_Edit').removeAttr('hidden');
-        $('#disable_Edit').attr('hidden', true);
-        $("#TEN_SACH").attr('readonly', true);
-        $("#MA_DS").prop("disabled", true);
-        $("#MA_TL").prop("disabled", true);
-        $("#GIA_BAN").attr('readonly', true);
-        $("#TAC_GIA").attr('readonly', true);
-        $("#NHA_XB").attr('readonly', true);
-        $("#NAM_XB").attr('readonly', true);
-        $("#SOLUONG").attr('readonly', true);
-        $("#MO_TA_SACH").attr('readonly', true);
-    }
-</script>
 
 <section class="page-section">
     <div class="container">
         <div class="d-flex">
             <div class="flex-grow-1">
-                <h2>Thông tin chi tiết sách</h2>
+                <h2>Thêm sách mới</h2>
             </div>
-            <button class="btn btn-outline-info" id="enable_Edit" onclick="enableEdit()">
-                <i class="fa-regular fa-pen-to-square"></i> Chỉnh sữa
-            </button>
-            <button class="btn btn-outline-danger" id="disable_Edit" onclick="disableEdit()" hidden>
-                <i class="fa-solid fa-x"></i> Huỷ
-            </button>
+            <div class="control-button">
+                <a class="control-link text-info" href="/">
+                    <i class="fa-solid fa-arrow-left"></i> Trở về
+                </a>
+            </div>
         </div>
         <div class="row m-3 border-bottom border-info"></div>
-        @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+        @if (ViewBag.error != null)
+        {<div class="alert alert-danger">@ViewBag.error</div>}
+        @using (Html.BeginForm("Create", "Home", FormMethod.Post, new { @enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <div class="row g-0">
@@ -62,36 +29,24 @@
                     <div class="form-group align-content-center">
                         <label>Mã Sách</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.MA_SACH, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.EditorFor(model => model.MA_SACH, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.MA_SACH, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Tên Sách</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.TEN_SACH, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.EditorFor(model => model.TEN_SACH, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.TEN_SACH, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Ảnh bìa</label>
-                        @if (Model != null)
-                        {
-                            if (Model.ANH_BIA != null)
-                            {
-                                <div class="form-group align-content-center">
-                                    <img src="@Url.Content("~/Assets/img/book/"+Model.ANH_BIA)" width="260" height="260" class="mx-auto d-block" />
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="form-group align-content-center">
-                                    <img src="@Url.Content("~/Assets/img/book/default.jpg")" width="360" height="360" class="rounded mx-auto d-block" />
-                                </div>
-                            }
-                        }
+                        <div class="form-group align-content-center">
+                            <img src="~/Assets/img/book/default.jpg" width="300" height="300" class="rounded mx-auto d-block" />
+                        </div>
                     </div>
-                    <div class="form-group text-center" id="UP_ANH_BIA" hidden>
+                    <div class="form-group text-center" id="UP_ANH_BIA">
                         <div class="row align-items-center">
                             <div class="col"></div>
                             <div class="col-6">
@@ -107,64 +62,65 @@
                     <div class="form-group">
                         <label>Dạng Sách</label>
                         <div class="col-md-10">
-                            @Html.DropDownList("MA_DS", (IEnumerable<SelectListItem>)ViewBag.Types, "---Chọn dạng sách---", new { @class = "form-control", @disabled = "disabled" })
+                            @Html.DropDownList("MA_DS", (IEnumerable<SelectListItem>)ViewBag.Types, "Chọn dạng sách", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.MA_DS, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Thể loại Sách</label>
                         <div class="col-md-10">
-                            @Html.DropDownList("MA_TL", (IEnumerable<SelectListItem>)ViewBag.Genres, "---Chọn thể loại---", new { @class = "form-control", @disabled = "disabled" })
+                            @Html.DropDownList("MA_TL", (IEnumerable<SelectListItem>)ViewBag.Genres, "Chọn thể loại", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.MA_TL, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Giá bán</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.GIA_BAN, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.EditorFor(model => model.GIA_BAN, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.GIA_BAN, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Tác Giả</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.TAC_GIA, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.EditorFor(model => model.TAC_GIA, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.TAC_GIA, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Nhà Xuất Bản</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.NHA_XB, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.EditorFor(model => model.NHA_XB, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.NHA_XB, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Năm Xuất Bản</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.NAM_XB, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.TextBoxFor(model => model.NAM_XB, new { @type = "date", @class = "form-control datepicker" })
                             @Html.ValidationMessageFor(model => model.NAM_XB, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Số lượng tồn</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.SOLUONG, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.EditorFor(model => model.SOLUONG, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.SOLUONG, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Mô Tả Sách</label>
                         <div class="col-md-10">
-                            <textarea class="form-control" name="MO_TA_SACH" id="MO_TA_SACH" rows="4" cols="50" readonly>@Model.MO_TA_SACH</textarea>
+                            @Html.TextAreaFor(model => model.MO_TA_SACH, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.MO_TA_SACH, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group mt-3">
-                        <button class="btn btn-danger btn-block btn-lg gradient-custom mb-3" type="submit" id="Edit_Button" hidden>SỬA</button>
+                        <button class="btn btn-danger btn-block btn-lg gradient-custom mb-3" type="submit" id="Edit_Button">THÊM SÁCH</button>
                     </div>
                 </div>
             </div>
         }
     </div>
 </section>
+

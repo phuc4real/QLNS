@@ -72,6 +72,10 @@
     padding: 5px;
 }
 
+.form-control:disabled {
+    background: #ffffff;
+}
+
 a.tool {
     padding: 5px;
     text-decoration: none;

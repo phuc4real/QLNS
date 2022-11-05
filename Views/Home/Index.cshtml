@@ -6,6 +6,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script>
+    function itemID(id) {
+        $("#deleteForm").attr('action', '/Home/Delete/' + id);
+    }
+</script>
+
 <section class="section-products">
     <div class="container">
         <div class="d-flex">
@@ -14,7 +20,7 @@
             </div>
             <div class="control-button">Tìm kiếm</div>
             <div class="control-button text-success">
-                <a class="control-link text-success" href="/Book/Create">
+                <a class="control-link text-success" href="Home/Create">
                     <i class="fa-sharp fa-solid fa-plus"></i>Thêm
                 </a>
             </div>

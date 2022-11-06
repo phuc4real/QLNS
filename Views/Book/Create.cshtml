@@ -18,11 +18,11 @@
         <div class="row m-3 border-bottom border-info"></div>
         @if (ViewBag.error != null)
         {<div class="alert alert-danger">@ViewBag.error</div>}
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @using (Html.BeginForm("Create", "Book", FormMethod.Post, new { @enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <div class="row g-0">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="col">
                     <div class="form-group align-content-center">
                         <label>Mã Sách</label>

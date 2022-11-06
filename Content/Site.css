@@ -314,6 +314,11 @@ a.tool {
         font-weight: 500;
     }
 
+.custom-item-button {
+    display: flex;
+    align-items: center;
+}
+
 .custom-item-button a {
     text-align: center;
     text-decoration: none;

@@ -5,8 +5,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script>
-    function itemID(id) {
-        $("#deleteForm").attr('action', '/Genre/Delete/'+id);
+    function submitResult(e, id) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Xác nhận',
+            text: "Xóa thể loại này?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xác nhận!',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Đã xóa!',
+                    'Thể loại đã được xoá.',
+                    'success'
+                ).then((result) => document.getElementById("Delete" + id).submit())
+            }
+        })
     }
 </script>
 <section class="page-section">
@@ -36,14 +54,18 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.TEN_TL)
                         </td>
-                        <td>
+                        <td class="d-flex align-items-center">
                             <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="/Genre/Edit/@item.MA_TL"><i class="fa-regular fa-pen-to-square"></i></a>
-                            <a role="button" class="tool" data-toggle="tooltip" title="Xoá thể loại" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="itemID('@item.MA_TL')"><i class="fa-solid fa-trash"></i></a>
+                            @using (Html.BeginForm("Delete", "Genre", FormMethod.Post, new { id = "Delete" + item.MA_TL }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" value="@item.MA_TL" name="id" id="id" />
+                                <a role="button" class="tool" onclick="return submitResult(event,'@item.MA_TL')"><i class="fa-solid fa-trash"></i></a>
+                            }
                         </td>
                     </tr>
                 }
             </table>
         </div>
-        @Html.Partial("_DeleteModal")
     </div>
 </section>

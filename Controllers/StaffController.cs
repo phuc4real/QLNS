@@ -53,7 +53,7 @@ namespace QLNS.Controllers
 
             db.SaveChanges();
 
-            if (tk.USERNAME == SessionHelper.GetSession().Get()) return RedirectToAction("Logout", "Auth");
+            if (tk != null) if (tk.USERNAME == SessionHelper.GetSession().Get()) return RedirectToAction("Logout", "Auth");
             return RedirectToAction("Index");
         }
         //GET Them nhan vien

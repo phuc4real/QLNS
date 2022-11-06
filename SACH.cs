@@ -41,7 +41,7 @@ namespace QLNS
         public string MO_TA_SACH { get; set; }
         [Display(Name = "Giá bán")]
         [Required(ErrorMessage = "Phải nhập vào một số!")]
-        [DisplayFormat(DataFormatString = "{0:#,###.## vnđ}")]
+        [DisplayFormat(DataFormatString = "{0:#.###,## ₫}")]
         [Range(0, int.MaxValue, ErrorMessage = "Hãy nhập số tiền hợp lệ!")]
         public Nullable<int> GIA_BAN { get; set; }
         [Display(Name = "Tác giả")]

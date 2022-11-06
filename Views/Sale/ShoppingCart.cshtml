@@ -8,6 +8,8 @@
 }
 
 <script>
+    const money = new Intl.NumberFormat('de-DE',
+        { style: 'currency', currency: 'VND' });
     function UpdateCart(ProductId) {
         var i = 0;
         if ("#Quality[txt-id='" + ProductId + "']" !== '') {
@@ -19,9 +21,9 @@
             data: { id: ProductId, quality: i },
             success: function (data) {
                 $("#Quality[txt-id='" + ProductId + "']").val(data.ItemAmount);
-                $("#Price[txt-id='" + ProductId + "']").text(data.SumPrice);
+                $("#Price[txt-id='" + ProductId + "']").text(money.format(data.SumPrice));
                 $("#Error[txt-id='" + ProductId + "']").text(data.Error);
-                $("#Total").text("Tổng tiền: " + data.Total);
+                $("#Total").text("Tổng tiền: " + money.format(data.Total));
                 $("#Cart_Amount").html(data.cartcount);
             }
         });
@@ -93,6 +95,7 @@
             <div class="flex-grow-1">
                 <h2>Giỏ hàng</h2>
             </div>
+            <a href="/Sale" class="text-decoration-none d-flex align-items-center"><i class="fas fa-long-arrow-alt-left me-2"></i>Tiếp tục mua hàng</a>
         </div>
         <div class="row m-3 border-bottom border-info"></div>
         <div class="row justify-content-center text-center">
@@ -104,8 +107,8 @@
             {
                 foreach (var item in (List<CartItem>)Session["ShoppingCart"])
                 {
-                    <div class="card rounded-3 mb-4">
-                        <div class="card-body p-4">
+                    <div class="card rounded-3 mb-3">
+                        <div class="card-body p-3">
                             <div class="row d-flex justify-content-between align-items-center">
                                 <div class="col-md-2 col-lg-2 col-xl-2">
                                     @if (item.SachOrder.ANH_BIA != null)
@@ -116,12 +119,11 @@
                                 <div class="col-md-3 col-lg-3 col-xl-3">
                                     <p class="lead fw-normal mb-2">@item.SachOrder.TEN_SACH</p>
                                     <p><span class="text-muted">Tác giả: </span>@item.SachOrder.TAC_GIA</p>
-                                    <p><span class="text-muted">Giá bán: </span>@decimal.Round((decimal)(@item.SachOrder.GIA_BAN), 0, MidpointRounding.AwayFromZero).ToString("#,###.##vnđ")</p>
+                                    <p><span class="text-muted">Giá bán: </span>@decimal.Round((decimal)(@item.SachOrder.GIA_BAN), 0, MidpointRounding.AwayFromZero).ToString("#.### ₫")</p>
                                 </div>
-                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    <input type="text" value="@item.Quantity" id="Quality" class="form-control form-control-sm text-center" txt-id="@item.SachOrder.MA_SACH" />
-                                    <button type="button" class="btn btn-warning ms-1" id="Update" onclick="UpdateCart('@item.SachOrder.MA_SACH')">Cập nhật</button>
-                                    @*<input type="submit" value="Cập nhật" class="btn btn-warning ms-4" id="Update" onclick="UpdateCart('@item.SachOrder.MA_SACH')" />*@
+                                <div class="col-md-3 col-lg-3 col-xl-3 d-flex">
+                                    <input type="text" value="@item.Quantity" id="Quality" class="text-center" txt-id="@item.SachOrder.MA_SACH" />
+                                    <input type="submit" value="Cập nhật" class="btn btn-warning ms-1" id="Update" onclick="UpdateCart('@item.SachOrder.MA_SACH')" />
                                     <br><span id="Error" txt-id="@item.SachOrder.MA_SACH"></span>
                                 </div>
                                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
@@ -129,18 +131,14 @@
                                     @{ double sum = item.SumPrice();
                                         total += sum;
                                     }
-                                    <h5 class="mb-0" id="Price" txt-id="@item.SachOrder.MA_SACH">@sum.ToString("#,###.##") vnđ</h5>
+                                    <h5 class="mb-0" id="Price" txt-id="@item.SachOrder.MA_SACH">@sum.ToString("#.### ₫")</h5>
                                 </div>
                                 <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                    @*<a href="@Url.Action("RemoveCart",new { ProductId = item.productOrder.ID})"
-                                       onclick="return RemoveCart();" class="text-danger">
-                                        <i class="fas fa-trash fa-lg"></i>
-                                    </a>*@
                                     @using (Html.BeginForm("RemoveCart", "Sale", FormMethod.Post, new { id = "Delete" + item.SachOrder.MA_SACH }))
                                     {
-                                        <input type="hidden" value="@item.SachOrder.MA_SACH" name="ProductID" id="ProductID" />
-                                        <button type="submit" onclick="return submitResult(event,@item.SachOrder.MA_SACH)">
-                                            <i class="fas fa-trash fa-lg"></i>
+                                        <input type="hidden" value="@item.SachOrder.MA_SACH" name="id" id="id" />
+                                        <button type="submit" class="btn btn-outline-danger d-flex align-items-center" onclick="return submitResult(event,@item.SachOrder.MA_SACH)">
+                                            <i class="fa-solid fa-x"></i>
                                         </button>
                                     }
                                 </div>
@@ -150,12 +148,9 @@
 
                 }
                 <div class="mb-4 cart-total">
-                    <h3 id="Total">Tổng tiền: @total.ToString("#,###.##") vnđ</h3>
+                    <h3 id="Total">Tổng tiền: @total.ToString("#.### ₫")</h3>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <a href="/Sale" class="back2shop"><i class="fas fa-long-arrow-alt-left me-2"></i>Tiếp tục mua hàng</a>
-                    @*<button type="button" class="btn btn-primary btn-block btn-lg">Thanh toán giỏ hàng</button>*@
-
+                <div class="d-flex justify-content-center">
                     @if (SessionHelper.GetSession() != null)
                     {
                         using (Html.BeginForm("Buy", "Product", FormMethod.Post, new { id = "BuyProduct" }))
@@ -169,10 +164,9 @@
                         using (Html.BeginForm("Index", "Account", FormMethod.Get, new { id = "Login" }))
                         {
                             <input type="hidden" value="@total" name="Total" id="Total" />
-                            <button type="button" class="btn btn-danger btn-block btn-lg" onclick="return login(event)">Đặt hàng</button>
+                            <button type="button" class="btn btn-danger btn-block btn-lg" onclick="return login(event)">Thanh toán</button>
                         }
                     }
-                    <a href="/Sale/Orderlist" class="btn btn-primary btn-block btn-lg">Đơn hàng</a>
                 </div>
             }
             else
@@ -180,7 +174,7 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="lead fw-normal mb-2">Không có sản phẩm nào trong giỏ hàng</p>
-                        <a href="/Sale" class="back2shop"><i class="fas fa-long-arrow-alt-left me-2"></i>Trở về trang sản phẩm</a>
+                        <a href="/Sale" class="text-decoration-none d-flex align-items-center"><i class="fas fa-long-arrow-alt-left me-2"></i>Trở về trang sản phẩm</a>
                     </div>
                 </div>
             }

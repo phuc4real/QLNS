@@ -10,8 +10,8 @@
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                 @if (SessionHelper.GetPermission() != "user") {<li class="nav-item"><a class="nav-link" href="/Genre">Thể loại</a></li>}
                 @if (SessionHelper.GetPermission() != "user") {<li class="nav-item"><a class="nav-link" href="/Supplier">Nhà cung cấp</a></li>}
+                <li class="nav-item"><a class="nav-link" href="/Sale">Bán hàng</a></li>
                 <li class="nav-item"><a class="nav-link" href="/Promotion">Khuyến mãi</a></li>
-                <li class="nav-item"><a class="nav-link" href="/Sale">Nhập xuất</a></li>
                 @if (SessionHelper.GetPermission() != "user") {<li class="nav-item"><a class="nav-link" href="/Staff">Nhân viên</a></li>}
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#collapseAccount" role="button"

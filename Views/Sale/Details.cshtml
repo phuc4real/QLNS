@@ -1,0 +1,111 @@
+﻿@model QLNS.SACH
+
+@{
+    ViewBag.Title = "Chi tiết sách";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="page-section">
+    <div class="container">
+        <div class="d-flex">
+            <div class="flex-grow-1">
+                <h2>Thông tin chi tiết sách</h2>
+            </div>
+            <a class="btn btn-outline-info ms-1 d-flex align-items-center" href="/Sale"><i class="fa-solid fa-arrow-left p-1"></i> Trở về</a>
+        </div>
+        <div class="row m-3 border-bottom border-info"></div>
+        <div>
+
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.MA_SACH)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MA_SACH)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MA_DS)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MA_DS)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MA_TL)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MA_TL)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.TEN_SACH)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TEN_SACH)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ANH_BIA)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ANH_BIA)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MO_TA_SACH)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MO_TA_SACH)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.GIA_BAN)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.GIA_BAN)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.TAC_GIA)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TAC_GIA)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.NHA_XB)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NHA_XB)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.NAM_XB)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NAM_XB)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SOLUONG)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SOLUONG)
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+</section>

@@ -144,6 +144,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Code\SessionHelper.cs" />
     <Compile Include="Code\UserSession.cs" />
+    <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -183,6 +184,7 @@
       <DependentUpon>CSDL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="NHAN_VIEN.cs">
       <DependentUpon>CSDL.tt</DependentUpon>
@@ -215,6 +217,7 @@
     <Content Include="Assets\img\book\f4218f88-74d7-4411-bef0-8fe170497a3f8935280903517.jpg" />
     <Content Include="Assets\img\logo.png" />
     <Content Include="Assets\img\staff.png" />
+    <Content Include="Content\aos.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -245,6 +248,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\aos.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -302,7 +306,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Book\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Auth\Index.cshtml" />
@@ -321,12 +325,15 @@
     <Content Include="Views\Auth\Create.cshtml" />
     <Content Include="Views\Supplier\Index.cshtml" />
     <Content Include="Views\Supplier\_DeleteModal.cshtml" />
-    <Content Include="Views\Home\Details.cshtml" />
-    <Content Include="Views\Home\_DeleteModal.cshtml" />
+    <Content Include="Views\Book\Details.cshtml" />
+    <Content Include="Views\Book\_DeleteModal.cshtml" />
     <Content Include="Views\Sale\Index.cshtml" />
     <Content Include="Views\Promotion\Index.cshtml" />
-    <Content Include="Views\Home\CreateO.cshtml" />
-    <Content Include="Views\Home\Create.cshtml" />
+    <Content Include="Views\Book\Create.cshtml" />
+    <Content Include="Views\Book\SearchBook.cshtml" />
+    <Content Include="Views\Sale\Details.cshtml" />
+    <Content Include="Views\Sale\SearchBook.cshtml" />
+    <Content Include="Views\Sale\ShoppingCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,7 +8,7 @@
 
 <script>
     function itemID(id) {
-        $("#deleteForm").attr('action', '/Home/Delete/' + id);
+        $("#deleteForm").attr('action', '/Book/Delete/' + id);
     }
 </script>
 
@@ -18,11 +18,15 @@
             <div class="flex-grow-1">
                 <h2>Quản lý sách</h2>
             </div>
-            <div class="control-button">Tìm kiếm</div>
-            <div class="control-button text-success">
-                <a class="control-link text-success" href="Home/Create">
-                    <i class="fa-sharp fa-solid fa-plus"></i>Thêm
-                </a>
+            <div class="d-flex">
+                @using (Html.BeginForm("SearchBook", "Book", FormMethod.Post, new { @class = "d-flex" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="text" class="form-control" placeholder="Tìm kiếm" name="term" />
+                    <button class="btn btn-outline-success ms-1" type="submit">Tìm</button>
+
+                }
+                <a class="btn btn-outline-success ms-1 thembtn" href="/Book/Create">Thêm</a>
             </div>
         </div>
         <div class="row m-3 border-bottom border-info"></div>
@@ -30,7 +34,7 @@
             @foreach (var item in Model)
             {
                 <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div id="book-1" class="single-product">
+                    <div data-aos="zoom-in" class="single-product">
                         <div class="part-1">
                             @if (item.ANH_BIA != null)
                             {
@@ -41,7 +45,7 @@
                                 <img src="@Url.Content("~/Assets/img/book/default.jpg")" />
                             }
                             <ul>
-                                <li><a href="@Url.Action("Details","Home", new { id = item.MA_SACH })"><i class="fas fa-expand"></i></a></li>
+                                <li><a href="@Url.Action("Details","Book", new { id = item.MA_SACH })"><i class="fas fa-expand"></i></a></li>
                                 <li><a onclick="AddToCart('@item.MA_SACH')"><i class="fas fa-shopping-cart"></i></a></li>
                                 <li><a role="button" class="tool" data-toggle="tooltip" title="Xoá sách" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="itemID('@item.MA_SACH')"><i class="fas fa-minus"></i></a></li>
                             </ul>

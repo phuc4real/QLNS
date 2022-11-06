@@ -11,16 +11,14 @@
             <div class="flex-grow-1">
                 <h2>Thêm sách mới</h2>
             </div>
-            <div class="control-button">
-                <a class="control-link text-info" href="/">
-                    <i class="fa-solid fa-arrow-left"></i> Trở về
-                </a>
+            <div class="d-flex p-1">
+                <a class="btn btn-outline-info ms-1 d-flex align-items-center" href="/"><i class="fa-solid fa-arrow-left p-1"></i> Trở về</a>
             </div>
         </div>
         <div class="row m-3 border-bottom border-info"></div>
         @if (ViewBag.error != null)
         {<div class="alert alert-danger">@ViewBag.error</div>}
-        @using (Html.BeginForm("Create", "Home", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Create", "Book", FormMethod.Post, new { @enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <div class="row g-0">

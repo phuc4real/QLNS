@@ -1,4 +1,7 @@
-﻿using System;
+﻿using PagedList;
+using QLNS.Code;
+using QLNS.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +11,199 @@ namespace QLNS.Controllers
 {
     public class SaleController : Controller
     {
-        // GET: Sale
-        public ActionResult Index()
+        private readonly CSDLEntities db = new CSDLEntities();
+        //Kiem tra trang thai login
+        public ActionResult IsLogin()
         {
+            ActionResult res = null;
+            if (!SessionHelper.IsLogin())
+            {
+                TempData["error"] = "Vui lòng đăng nhập vào hệ thống";
+                res = RedirectToAction("Index", "Auth");
+            }
+            return res;
+        }
+        public IEnumerable<SACH> BooksPaged(int? page)
+        {
+            int PageSize = 8;
+            int PageNumber = (page ?? 1);
+            return db.SACHes.OrderBy(x => x.MA_SACH).ToPagedList(PageNumber, PageSize);
+        }
+        //Danh sach san pham sach
+        public ActionResult Index(int? page)
+        {
+            if (IsLogin() != null) return IsLogin();
+            if (page == null) page = 1;
+            var list = BooksPaged(page);
+            return View(list);
+        }
+
+        //Lay ds the loai
+        private List<SelectListItem> GetGenres()
+        {
+            var listGenre = new List<SelectListItem>();
+            listGenre = db.THE_LOAI.Select(t => new SelectListItem()
+            {
+                Value = t.MA_TL.ToString(),
+                Text = t.TEN_TL
+            }).ToList();
+
+            return listGenre;
+        }
+        //Lay ds dang sach
+        private List<SelectListItem> GetTypes()
+        {
+            var listType = new List<SelectListItem>();
+            listType = db.DANG_SACH.Select(t => new SelectListItem()
+            {
+                Value = t.MA_DS.ToString(),
+                Text = t.TEN_DS
+            }).ToList();
+
+            return listType;
+        }
+        //Thong tin chi tiet
+        public ActionResult Details(string id)
+        {
+            if (IsLogin() != null) return IsLogin();
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            SACH sach = db.SACHes.SingleOrDefault(s => s.MA_SACH == id);
+            if (sach == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+
+            ViewBag.Genres = GetGenres();
+            ViewBag.Types = GetTypes();
+
+            return View(sach);
+        }
+        //Tim kiem sach
+        public ActionResult SearchBook(string term, int? page)
+        {
+            if (IsLogin() != null) return IsLogin();
+            if (term == null) return Redirect("/");
+            if (page == null) page = 1;
+            var s = term.ToLower();
+            var result = db.SACHes
+                            .Where(b => b.MA_SACH.ToLower().Contains(s) ||
+                                   b.TEN_SACH.ToLower().Contains(s) ||
+                                   b.TAC_GIA.ToLower().Contains(s) ||
+                                   b.NHA_XB.ToLower().Contains(s))
+                            .OrderBy(x => x.MA_SACH)
+                            .ToList();
+            int PageSize = 8;
+            int PageNumber = (page ?? 1);
+            return View(result.ToPagedList(PageNumber, PageSize));
+        }
+        //Cap nhat gio hang
+        [HttpPost]
+        public JsonResult UpdateCart(string id, string quality)
+        {
+            List<CartItem> listCartItem = (List<CartItem>)Session["ShoppingCart"];
+
+            double sum = 0, total = 0;
+            string err = "";
+            int cartcount = 0;
+            if (!int.TryParse(quality, out int a) || int.Parse(quality) < 0)
+            {
+                err = "Số lượng không hợp lệ";
+                foreach (CartItem item in listCartItem)
+                {
+                    if (item.SachOrder.MA_SACH == id)
+                    {
+                        a = item.Quantity;
+                        sum = item.SumPrice();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                if (Session["ShoppingCart"] != null)
+                {
+                    foreach (CartItem item in listCartItem)
+                    {
+                        if (item.SachOrder.MA_SACH == id)
+                        {
+                            item.Quantity = a;
+                            sum = item.SumPrice();
+                            break;
+                        }
+                    }
+                    Session["ShoppingCart"] = listCartItem;
+                }
+            }
+            foreach (CartItem i in listCartItem)
+            {
+                total += i.SumPrice();
+                cartcount += i.Quantity;
+            }
+
+            return Json(new { ItemAmount = a, SumPrice = sum, Total = total, Error = err, cartcount });
+        }
+        //Them vao gio hang
+        [HttpPost]
+        public JsonResult AddToCart(string id)
+        {
+            //Process Add To Cart
+            List<CartItem> listCardItem;
+            if (Session["ShoppingCart"] == null)
+            {
+                //Create New Shopping Cart Session 
+                listCardItem = new List<CartItem>
+                {
+                    new CartItem { Quantity = 1, SachOrder = db.SACHes.Find(id) }
+                };
+                Session["ShoppingCart"] = listCardItem;
+            }
+            else
+            {
+                bool flag = false;
+                listCardItem = (List<CartItem>)Session["ShoppingCart"];
+                foreach (CartItem item in listCardItem)
+                {
+                    if (item.SachOrder.MA_SACH == id)
+                    {
+                        item.Quantity++; flag = true;
+                        break;
+                    }
+                }
+
+                if (!flag)
+                    listCardItem.Add(new CartItem { Quantity = 1, SachOrder = db.SACHes.Find(id) });
+
+                Session["ShoppingCard"] = listCardItem;
+            }
+            //Count item in shopping cart 
+            int cartcount = 0;
+            List<CartItem> ls = (List<CartItem>)Session["ShoppingCart"];
+            foreach (CartItem item in ls)
+            {
+                cartcount += item.Quantity;
+            }
+            return Json(new { ItemAmount = cartcount });
+        }
+
+        [HttpPost]
+        public RedirectToRouteResult RemoveCart(string id)
+        {
+            List<CartItem> cart = (List<CartItem>)Session["ShoppingCart"];
+            CartItem remove = cart.SingleOrDefault(m => m.SachOrder.MA_SACH == id);
+            if (remove != null)
+            {
+                cart.Remove(remove);
+            }
+
+            return RedirectToAction("ShoppingCart");
+        }
+        public ActionResult ShoppingCart()
+        {
+            if (IsLogin() != null) return IsLogin();
             return View();
         }
     }

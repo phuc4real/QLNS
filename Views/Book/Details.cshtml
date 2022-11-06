@@ -46,14 +46,15 @@
                 <h2>Thông tin chi tiết sách</h2>
             </div>
             <button class="btn btn-outline-info" id="enable_Edit" onclick="enableEdit()">
-                <i class="fa-regular fa-pen-to-square"></i> Chỉnh sữa
+                <i class="fa-regular fa-pen-to-square"></i> Chỉnh sửa
             </button>
             <button class="btn btn-outline-danger" id="disable_Edit" onclick="disableEdit()" hidden>
                 <i class="fa-solid fa-x"></i> Huỷ
             </button>
+                <a class="btn btn-outline-info ms-1 d-flex align-items-center" href="/"><i class="fa-solid fa-arrow-left p-1"></i> Trở về</a>
         </div>
         <div class="row m-3 border-bottom border-info"></div>
-        @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Edit", "Book", FormMethod.Post, new { @enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <div class="row g-0">

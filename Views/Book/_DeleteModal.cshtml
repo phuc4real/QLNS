@@ -10,7 +10,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                @using (Html.BeginForm("Delete", "Home", FormMethod.Post, new { id = "deleteForm" }))
+                @using (Html.BeginForm("Delete", "Book", FormMethod.Post, new { id = "deleteForm" }))
                 {
                     @Html.AntiForgeryToken()
                     <input type="submit" value="Xoá" id="submitButton" class="btn btn-danger" />

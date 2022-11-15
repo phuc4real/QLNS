@@ -149,6 +149,7 @@
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\PromotionController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
@@ -323,7 +324,6 @@
     <Content Include="Views\Staff\Edit.cshtml" />
     <Content Include="Views\Auth\Create.cshtml" />
     <Content Include="Views\Supplier\Index.cshtml" />
-    <Content Include="Views\Supplier\_DeleteModal.cshtml" />
     <Content Include="Views\Book\Details.cshtml" />
     <Content Include="Views\Sale\Index.cshtml" />
     <Content Include="Views\Promotion\Index.cshtml" />
@@ -332,6 +332,7 @@
     <Content Include="Views\Sale\Details.cshtml" />
     <Content Include="Views\Sale\SearchBook.cshtml" />
     <Content Include="Views\Sale\ShoppingCart.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

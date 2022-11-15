@@ -7,8 +7,26 @@
 }
 
 <script>
-    function itemID(id) {
-        $("#deleteForm").attr('action', '/Book/Delete/' + id);
+    function submitResult(e, id) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Xác nhận',
+            text: "Xóa sách này?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xác nhận!',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Đã xóa!',
+                    'Sách đã được xoá.',
+                    'success'
+                ).then((result) => document.getElementById("Delete" + id).submit())
+            }
+        })
     }
 </script>
 
@@ -46,11 +64,18 @@
                                 {
                                     <img src="@Url.Content("~/Assets/img/book/default.jpg")" />
                                 }
-                                <ul>
-                                    <li><a href="@Url.Action("Details","Book", new { id = item.MA_SACH })"><i class="fas fa-expand"></i></a></li>
-                                    <li><a onclick="AddToCart('@item.MA_SACH')"><i class="fas fa-shopping-cart"></i></a></li>
-                                    <li><a role="button" class="tool" data-toggle="tooltip" title="Xoá sách" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="itemID('@item.MA_SACH')"><i class="fas fa-minus"></i></a></li>
-                                </ul>
+                            <ul>
+                                <li><a href="@Url.Action("Details","Book", new { id = item.MA_SACH })"><i class="fas fa-expand"></i></a></li>
+                                <li><a onclick="AddToCart('@item.MA_SACH')"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li>
+                                    @using (Html.BeginForm("Delete", "Book", FormMethod.Post, new { id = "Delete" + item.MA_SACH }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" value="@item.MA_SACH" name="id" id="id" />
+                                        <a role="button" class="tool" onclick="return submitResult(event,'@item.MA_SACH')"><i class="fa-solid fa-trash"></i></a>
+                                    }
+                                </li>
+                            </ul>
                             </div>
                             <div class="part-2">
                                 <h3 class="product-title">@Html.DisplayFor(modelItem => item.TEN_SACH)</h3>
@@ -76,6 +101,5 @@
        LiElementClasses = new string[] { "pagination-item" }
    })
         </div>
-        @Html.Partial("_DeleteModal")
     </div>
 </section>

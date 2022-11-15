@@ -1,13 +1,31 @@
-﻿@model PagedList.IPagedList<QLNS.NHA_CUNG_CAP>
-@using PagedList.Mvc;
+﻿@model IEnumerable<QLNS.NHA_CUNG_CAP>
 
 @{
     ViewBag.Title = "Nhà cung cấp";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <script>
-    function itemID(id) {
-        $("#deleteForm").attr('action', '/Staff/Delete/' + id);
+    function submitResult(e, id) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Xác nhận',
+            text: "Xóa nhà cung cấp?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xác nhận!',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Đã xóa!',
+                    'Nhà cung cấp đã được xoá.',
+                    'success'
+                ).then((result) => document.getElementById("Delete" + id).submit())
+            }
+        })
     }
 </script>
 
@@ -17,62 +35,47 @@
             <div class="flex-grow-1">
                 <h2>Quản lý nhà cung cấp</h2>
             </div>
-            <div class="control-button text-success">
-                <a class="control-link text-success" href="/Supplier/Create">
-                    <i class="fa-sharp fa-solid fa-plus"></i> Thêm
-                </a>
+            <div class="d-flex p-1">
+                <a class="btn btn-outline-success ms-1" href="/Supplier/Create">Thêm</a>
             </div>
         </div>
         <div class="row m-3 border-bottom border-info"></div>
-        <div class="list-container">
-            <div class="list-custom">
-                <ul>
-                    @foreach (var item in Model)
-                    {
-                        <li>
-                            <div class="item-custom">
-                                <div class="custom-item-image">
-                                    <div class="custom-item-img">
-                                        <img src="~/Assets/img/staff.png">
-                                    </div>
-                                </div>
-                                <div class="custom-item-info">
-                                    <div class="custom-item-content">
-                                        <h3>@Html.DisplayFor(modelItem => item.TEN_NCC)</h3>
-                                        <p>@Html.DisplayFor(modelItem => item.MA_NCC)</p>
-                                    </div>
-                                    <div class="custom-item-footer">
-                                        <div class="custom-item-contact">
-                                            <div class="custom-item-address">
-                                                <i class="fa-sharp fa-solid fa-location-dot"></i>
-                                                <p>@Html.DisplayFor(modelItem => item.DIACHI)</p>
-                                            </div>
-                                            <div class="custom-item-phone">
-                                                <i class="fa-solid fa-phone"></i>
-                                                <p>@Html.DisplayFor(modelItem => item.LIENLAC)</p>
-                                            </div>
-                                        </div>
-                                        <div class="custom-item-button">
-                                            <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="/Staff/Edit/@item.MA_NCC"><i class="fa-regular fa-pen-to-square"></i></a>
-                                            <a role="button" class="tool" data-toggle="tooltip" title="Xoá nhân viên" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="itemID('@item.MA_NCC')"><i class="fa-solid fa-trash"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    }
-                </ul>
-            </div>
+        <div class="row border-dark">
+            <table class="table table-hover">
+                <tr>
+                    <th><h5>Mã nhà cung cấp</h5></th>
+                    <th><h5>Tên nhà cung cấp</h5></th>
+                    <th><h5>Địa chỉ</h5></th>
+                    <th><h5>Thông tin liên lạc</h5></th>
+                    <th><h5>Công cụ</h5></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MA_NCC)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TEN_NCC)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DIACHI)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LIENLAC)
+                        </td>
+                        <td class="d-flex align-items-center">
+                            <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="/Genre/Edit/@item.MA_NCC"><i class="fa-regular fa-pen-to-square"></i></a>
+                            @using (Html.BeginForm("Delete", "Supplier", FormMethod.Post, new { id = "Delete" + item.MA_NCC }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" value="@item.MA_NCC" name="id" id="id" />
+                                <a role="button" class="tool" onclick="return submitResult(event,'@item.MA_NCC')"><i class="fa-solid fa-trash"></i></a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
         </div>
-        <div class="d-flex flex-row-reverse">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
-   {
-       DisplayLinkToIndividualPages = true,
-       DisplayPageCountAndCurrentLocation = false,
-       MaximumPageNumbersToDisplay = 3,
-       LiElementClasses = new string[] { "pagination-item" }
-   })
-        </div>
-        @Html.Partial("_DeleteModal")
     </div>
 </section>

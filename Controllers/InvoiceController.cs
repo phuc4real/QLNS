@@ -1,4 +1,5 @@
-﻿using QLNS.Code;
+﻿
+using QLNS.Code;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Web.Mvc;
 
 namespace QLNS.Controllers
 {
-    public class PromotionController : Controller
+    public class InvoiceController : Controller
     {
         private readonly CSDLEntities db = new CSDLEntities();
         public ActionResult IsLogin()
@@ -20,11 +21,12 @@ namespace QLNS.Controllers
             }
             return res;
         }
-        // GET: Promotion
+        // GET: Order
         public ActionResult Index()
         {
+
             if (IsLogin() != null) return IsLogin();
-            return View(db.KHUYEN_MAI.ToList());
+            return View(db.HOA_DON.ToList());
         }
     }
 }

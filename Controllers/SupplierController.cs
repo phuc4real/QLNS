@@ -22,19 +22,10 @@ namespace QLNS.Controllers
             }
             return res;
         }
-        public IEnumerable<NHA_CUNG_CAP> BooksPaged(int? page)
+        // GET: Supplier
+        public ActionResult Index()
         {
-            int PageSize = 4;
-            int PageNumber = (page ?? 1);
-            return db.NHA_CUNG_CAP.OrderBy(x => x.MA_NCC).ToPagedList(PageNumber, PageSize);
-        }
-        // GET: Staff
-        public ActionResult Index(int? page)
-        {
-            if (IsLogin() != null) return IsLogin();
-            if (page == null) page = 1;
-            var list = BooksPaged(page);
-            return View(list);
+            return View(db.NHA_CUNG_CAP.ToList());
         }
     }
 }

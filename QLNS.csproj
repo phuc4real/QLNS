@@ -142,6 +142,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="CHI_TIET_HOA_DON.cs">
+      <DependentUpon>CSDL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CHI_TIET_NHAP_HANG.cs">
+      <DependentUpon>CSDL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CHUC_VU.cs">
+      <DependentUpon>CSDL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Code\SessionHelper.cs" />
     <Compile Include="Code\UserSession.cs" />
     <Compile Include="Controllers\BookController.cs" />
@@ -149,11 +158,15 @@
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\PromotionController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="CO_CV.cs">
+      <DependentUpon>CSDL.tt</DependentUpon>
+    </Compile>
     <Compile Include="CSDL.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -172,7 +185,13 @@
     <Compile Include="DANG_SACH.cs">
       <DependentUpon>CSDL.tt</DependentUpon>
     </Compile>
+    <Compile Include="DON_GIA.cs">
+      <DependentUpon>CSDL.tt</DependentUpon>
+    </Compile>
     <Compile Include="DON_NHAP_HANG.cs">
+      <DependentUpon>CSDL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DO_TUOI.cs">
       <DependentUpon>CSDL.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -333,6 +352,7 @@
     <Content Include="Views\Sale\SearchBook.cshtml" />
     <Content Include="Views\Sale\ShoppingCart.cshtml" />
     <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Import\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -66,11 +66,11 @@
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.GIA_BAN)
+                    @Html.DisplayNameFor(model => model.DON_GIA.OrderByDescending(e => e.NGAY_AP_DUNG).DefaultIfEmpty().First().SO_TIEN)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.GIA_BAN)
+                    @Html.DisplayFor(model => model.DON_GIA.OrderByDescending(e => e.NGAY_AP_DUNG).DefaultIfEmpty().First().SO_TIEN)
                 </dd>
 
                 <dt>
@@ -98,11 +98,11 @@
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.SOLUONG)
+                    @Html.DisplayNameFor(model => model.SL_TON)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.SOLUONG)
+                    @Html.DisplayFor(model => model.SL_TON)
                 </dd>
 
             </dl>

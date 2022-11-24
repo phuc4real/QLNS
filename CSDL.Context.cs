@@ -27,7 +27,13 @@ namespace QLNS
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<CHI_TIET_HOA_DON> CHI_TIET_HOA_DON { get; set; }
+        public virtual DbSet<CHI_TIET_NHAP_HANG> CHI_TIET_NHAP_HANG { get; set; }
+        public virtual DbSet<CHUC_VU> CHUC_VU { get; set; }
+        public virtual DbSet<CO_CV> CO_CV { get; set; }
         public virtual DbSet<DANG_SACH> DANG_SACH { get; set; }
+        public virtual DbSet<DO_TUOI> DO_TUOI { get; set; }
+        public virtual DbSet<DON_GIA> DON_GIA { get; set; }
         public virtual DbSet<DON_NHAP_HANG> DON_NHAP_HANG { get; set; }
         public virtual DbSet<HOA_DON> HOA_DON { get; set; }
         public virtual DbSet<KHUYEN_MAI> KHUYEN_MAI { get; set; }

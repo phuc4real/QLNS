@@ -12,13 +12,13 @@ namespace QLNS
     using System;
     using System.Collections.Generic;
     
-    public partial class TAI_KHOAN
+    public partial class DON_GIA
     {
-        public string USERNAME { get; set; }
-        public string MA_NV { get; set; }
-        public string PASSWORD { get; set; }
-        public string QUYEN { get; set; }
+        public string MA_DG { get; set; }
+        public Nullable<double> SO_TIEN { get; set; }
+        public Nullable<System.DateTime> NGAY_AP_DUNG { get; set; }
+        public string MA_SACH { get; set; }
     
-        public virtual NHAN_VIEN NHAN_VIEN { get; set; }
+        public virtual SACH SACH { get; set; }
     }
 }

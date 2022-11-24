@@ -122,8 +122,8 @@
                     <div class="form-group">
                         <label>Giá bán</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.GIA_BAN, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                            @Html.ValidationMessageFor(model => model.GIA_BAN, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.DON_GIA.OrderByDescending(e => e.NGAY_AP_DUNG).DefaultIfEmpty().First().SO_TIEN, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.DON_GIA.OrderByDescending(e => e.NGAY_AP_DUNG).DefaultIfEmpty().First().SO_TIEN, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -150,8 +150,8 @@
                     <div class="form-group">
                         <label>Số lượng tồn</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.SOLUONG, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                            @Html.ValidationMessageFor(model => model.SOLUONG, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.SL_TON, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.SL_TON, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">

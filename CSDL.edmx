@@ -5,14 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="CSDLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="CHI_TIET_DON_NHAP">
-          <Key>
-            <PropertyRef Name="MA_SACH" />
-            <PropertyRef Name="MA_DON_NHAP" />
-          </Key>
-          <Property Name="MA_SACH" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="MA_DON_NHAP" Type="nvarchar" MaxLength="20" Nullable="false" />
-        </EntityType>
         <EntityType Name="CHI_TIET_HOA_DON">
           <Key>
             <PropertyRef Name="MA_SACH" />
@@ -20,6 +12,7 @@
           </Key>
           <Property Name="MA_SACH" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="MA_HD" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SL_SACH" Type="int" />
         </EntityType>
         <EntityType Name="CHI_TIET_KHUYEN_MAI">
           <Key>
@@ -29,13 +22,32 @@
           <Property Name="MA_KM" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="MA_SACH" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
-        <EntityType Name="CHI_TIET_NCC">
+        <EntityType Name="CHI_TIET_NHAP_HANG">
           <Key>
-            <PropertyRef Name="MA_NCC" />
+            <PropertyRef Name="MA_SACH" />
             <PropertyRef Name="MA_DON_NHAP" />
           </Key>
-          <Property Name="MA_NCC" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MA_SACH" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="MA_DON_NHAP" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SL_NHAP" Type="int" />
+          <Property Name="GIA_NHAP" Type="float" />
+        </EntityType>
+        <EntityType Name="CHUC_VU">
+          <Key>
+            <PropertyRef Name="MA_CV" />
+          </Key>
+          <Property Name="MA_CV" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="TEN_CV" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="CO_CV">
+          <Key>
+            <PropertyRef Name="MA_CV" />
+            <PropertyRef Name="MA_NV" />
+          </Key>
+          <Property Name="MA_CV" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MA_NV" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="TG_NHAN_CHUC" Type="date" />
+          <Property Name="TG_TU_CHUC" Type="date" />
         </EntityType>
         <EntityType Name="DANG_SACH">
           <Key>
@@ -44,6 +56,22 @@
           <Property Name="MA_DS" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="TEN_DS" Type="nvarchar" MaxLength="150" />
         </EntityType>
+        <EntityType Name="DO_TUOI">
+          <Key>
+            <PropertyRef Name="MA_DT" />
+          </Key>
+          <Property Name="MA_DT" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="TEN_DT" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="DON_GIA">
+          <Key>
+            <PropertyRef Name="MA_DG" />
+          </Key>
+          <Property Name="MA_DG" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SO_TIEN" Type="float" />
+          <Property Name="NGAY_AP_DUNG" Type="date" />
+          <Property Name="MA_SACH" Type="nvarchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="DON_NHAP_HANG">
           <Key>
             <PropertyRef Name="MA_DON_NHAP" />
@@ -51,6 +79,8 @@
           <Property Name="MA_DON_NHAP" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="MA_NV" Type="nvarchar" MaxLength="20" />
           <Property Name="NGAY_NHAP" Type="date" />
+          <Property Name="TONG_CHI" Type="nchar" MaxLength="10" />
+          <Property Name="MA_NCC" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="HOA_DON">
           <Key>
@@ -59,6 +89,7 @@
           <Property Name="MA_HD" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="MA_NV" Type="nvarchar" MaxLength="20" />
           <Property Name="NGAY_LAP" Type="date" />
+          <Property Name="THANH_TIEN" Type="float" />
         </EntityType>
         <EntityType Name="KHUYEN_MAI">
           <Key>
@@ -80,6 +111,7 @@
           <Property Name="TEN_NCC" Type="nvarchar" MaxLength="150" />
           <Property Name="DIACHI" Type="nvarchar" MaxLength="150" />
           <Property Name="LIENLAC" Type="nvarchar" MaxLength="150" />
+          <Property Name="TONG_NHAP" Type="int" />
         </EntityType>
         <EntityType Name="NHAN_VIEN">
           <Key>
@@ -90,6 +122,8 @@
           <Property Name="NAM_SINH" Type="date" />
           <Property Name="NOI_SONG" Type="nvarchar" MaxLength="150" />
           <Property Name="SDT" Type="nvarchar" MaxLength="10" />
+          <Property Name="NGAY_GIA_NHAP" Type="date" />
+          <Property Name="NGAY_NGHI_VIEC" Type="date" />
         </EntityType>
         <EntityType Name="SACH">
           <Key>
@@ -97,15 +131,16 @@
           </Key>
           <Property Name="MA_SACH" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="MA_DS" Type="nvarchar" MaxLength="20" />
+          <Property Name="MA_DT" Type="nvarchar" MaxLength="20" />
           <Property Name="MA_TL" Type="nvarchar" MaxLength="20" />
           <Property Name="TEN_SACH" Type="nvarchar" MaxLength="150" />
-          <Property Name="ANH_BIA" Type="nvarchar" MaxLength="150" />
           <Property Name="MO_TA_SACH" Type="ntext" />
-          <Property Name="GIA_BAN" Type="int" />
+          <Property Name="ANH_BIA" Type="nvarchar" MaxLength="150" />
           <Property Name="TAC_GIA" Type="nvarchar" MaxLength="150" />
           <Property Name="NHA_XB" Type="nvarchar" MaxLength="150" />
           <Property Name="NAM_XB" Type="date" />
-          <Property Name="SOLUONG" Type="int" />
+          <Property Name="SL_BAN" Type="int" />
+          <Property Name="SL_TON" Type="int" />
         </EntityType>
         <EntityType Name="TAI_KHOAN">
           <Key>
@@ -125,24 +160,24 @@
         </EntityType>
         <Association Name="FK_CHI_TIET_DON_NHAP_DON_NHAP_HANG">
           <End Role="DON_NHAP_HANG" Type="Self.DON_NHAP_HANG" Multiplicity="1" />
-          <End Role="CHI_TIET_DON_NHAP" Type="Self.CHI_TIET_DON_NHAP" Multiplicity="*" />
+          <End Role="CHI_TIET_NHAP_HANG" Type="Self.CHI_TIET_NHAP_HANG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DON_NHAP_HANG">
               <PropertyRef Name="MA_DON_NHAP" />
             </Principal>
-            <Dependent Role="CHI_TIET_DON_NHAP">
+            <Dependent Role="CHI_TIET_NHAP_HANG">
               <PropertyRef Name="MA_DON_NHAP" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CHI_TIET_DON_NHAP_SACH">
           <End Role="SACH" Type="Self.SACH" Multiplicity="1" />
-          <End Role="CHI_TIET_DON_NHAP" Type="Self.CHI_TIET_DON_NHAP" Multiplicity="*" />
+          <End Role="CHI_TIET_NHAP_HANG" Type="Self.CHI_TIET_NHAP_HANG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SACH">
               <PropertyRef Name="MA_SACH" />
             </Principal>
-            <Dependent Role="CHI_TIET_DON_NHAP">
+            <Dependent Role="CHI_TIET_NHAP_HANG">
               <PropertyRef Name="MA_SACH" />
             </Dependent>
           </ReferentialConstraint>
@@ -195,26 +230,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CHI_TIET_NCC_DON_NHAP_HANG">
-          <End Role="DON_NHAP_HANG" Type="Self.DON_NHAP_HANG" Multiplicity="1" />
-          <End Role="CHI_TIET_NCC" Type="Self.CHI_TIET_NCC" Multiplicity="*" />
+        <Association Name="FK_CO_CV_CHUC_VU">
+          <End Role="CHUC_VU" Type="Self.CHUC_VU" Multiplicity="1" />
+          <End Role="CO_CV" Type="Self.CO_CV" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DON_NHAP_HANG">
-              <PropertyRef Name="MA_DON_NHAP" />
+            <Principal Role="CHUC_VU">
+              <PropertyRef Name="MA_CV" />
             </Principal>
-            <Dependent Role="CHI_TIET_NCC">
-              <PropertyRef Name="MA_DON_NHAP" />
+            <Dependent Role="CO_CV">
+              <PropertyRef Name="MA_CV" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CHI_TIET_NCC_NHA_CUNG_CAP">
-          <End Role="NHA_CUNG_CAP" Type="Self.NHA_CUNG_CAP" Multiplicity="1" />
-          <End Role="CHI_TIET_NCC" Type="Self.CHI_TIET_NCC" Multiplicity="*" />
+        <Association Name="FK_CO_CV_NHAN_VIEN">
+          <End Role="NHAN_VIEN" Type="Self.NHAN_VIEN" Multiplicity="1" />
+          <End Role="CO_CV" Type="Self.CO_CV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHAN_VIEN">
+              <PropertyRef Name="MA_NV" />
+            </Principal>
+            <Dependent Role="CO_CV">
+              <PropertyRef Name="MA_NV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DON_GIA_SACH">
+          <End Role="SACH" Type="Self.SACH" Multiplicity="0..1" />
+          <End Role="DON_GIA" Type="Self.DON_GIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SACH">
+              <PropertyRef Name="MA_SACH" />
+            </Principal>
+            <Dependent Role="DON_GIA">
+              <PropertyRef Name="MA_SACH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DON_NHAP_HANG_NHA_CUNG_CAP">
+          <End Role="NHA_CUNG_CAP" Type="Self.NHA_CUNG_CAP" Multiplicity="0..1" />
+          <End Role="DON_NHAP_HANG" Type="Self.DON_NHAP_HANG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHA_CUNG_CAP">
               <PropertyRef Name="MA_NCC" />
             </Principal>
-            <Dependent Role="CHI_TIET_NCC">
+            <Dependent Role="DON_NHAP_HANG">
               <PropertyRef Name="MA_NCC" />
             </Dependent>
           </ReferentialConstraint>
@@ -252,6 +311,18 @@
             </Principal>
             <Dependent Role="SACH">
               <PropertyRef Name="MA_DS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SACH_DO_TUOI">
+          <End Role="DO_TUOI" Type="Self.DO_TUOI" Multiplicity="0..1" />
+          <End Role="SACH" Type="Self.SACH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DO_TUOI">
+              <PropertyRef Name="MA_DT" />
+            </Principal>
+            <Dependent Role="SACH">
+              <PropertyRef Name="MA_DT" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -284,11 +355,14 @@
           <Parameter Name="Password" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="CSDLModelStoreContainer">
-          <EntitySet Name="CHI_TIET_DON_NHAP" EntityType="Self.CHI_TIET_DON_NHAP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHI_TIET_HOA_DON" EntityType="Self.CHI_TIET_HOA_DON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHI_TIET_KHUYEN_MAI" EntityType="Self.CHI_TIET_KHUYEN_MAI" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CHI_TIET_NCC" EntityType="Self.CHI_TIET_NCC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHI_TIET_NHAP_HANG" EntityType="Self.CHI_TIET_NHAP_HANG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHUC_VU" EntityType="Self.CHUC_VU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CO_CV" EntityType="Self.CO_CV" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DANG_SACH" EntityType="Self.DANG_SACH" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DO_TUOI" EntityType="Self.DO_TUOI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DON_GIA" EntityType="Self.DON_GIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DON_NHAP_HANG" EntityType="Self.DON_NHAP_HANG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HOA_DON" EntityType="Self.HOA_DON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KHUYEN_MAI" EntityType="Self.KHUYEN_MAI" Schema="dbo" store:Type="Tables" />
@@ -299,11 +373,11 @@
           <EntitySet Name="THE_LOAI" EntityType="Self.THE_LOAI" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CHI_TIET_DON_NHAP_DON_NHAP_HANG" Association="Self.FK_CHI_TIET_DON_NHAP_DON_NHAP_HANG">
             <End Role="DON_NHAP_HANG" EntitySet="DON_NHAP_HANG" />
-            <End Role="CHI_TIET_DON_NHAP" EntitySet="CHI_TIET_DON_NHAP" />
+            <End Role="CHI_TIET_NHAP_HANG" EntitySet="CHI_TIET_NHAP_HANG" />
           </AssociationSet>
           <AssociationSet Name="FK_CHI_TIET_DON_NHAP_SACH" Association="Self.FK_CHI_TIET_DON_NHAP_SACH">
             <End Role="SACH" EntitySet="SACH" />
-            <End Role="CHI_TIET_DON_NHAP" EntitySet="CHI_TIET_DON_NHAP" />
+            <End Role="CHI_TIET_NHAP_HANG" EntitySet="CHI_TIET_NHAP_HANG" />
           </AssociationSet>
           <AssociationSet Name="FK_CHI_TIET_HOA_DON_HOA_DON" Association="Self.FK_CHI_TIET_HOA_DON_HOA_DON">
             <End Role="HOA_DON" EntitySet="HOA_DON" />
@@ -321,13 +395,21 @@
             <End Role="SACH" EntitySet="SACH" />
             <End Role="CHI_TIET_KHUYEN_MAI" EntitySet="CHI_TIET_KHUYEN_MAI" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHI_TIET_NCC_DON_NHAP_HANG" Association="Self.FK_CHI_TIET_NCC_DON_NHAP_HANG">
-            <End Role="DON_NHAP_HANG" EntitySet="DON_NHAP_HANG" />
-            <End Role="CHI_TIET_NCC" EntitySet="CHI_TIET_NCC" />
+          <AssociationSet Name="FK_CO_CV_CHUC_VU" Association="Self.FK_CO_CV_CHUC_VU">
+            <End Role="CHUC_VU" EntitySet="CHUC_VU" />
+            <End Role="CO_CV" EntitySet="CO_CV" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHI_TIET_NCC_NHA_CUNG_CAP" Association="Self.FK_CHI_TIET_NCC_NHA_CUNG_CAP">
+          <AssociationSet Name="FK_CO_CV_NHAN_VIEN" Association="Self.FK_CO_CV_NHAN_VIEN">
+            <End Role="NHAN_VIEN" EntitySet="NHAN_VIEN" />
+            <End Role="CO_CV" EntitySet="CO_CV" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DON_GIA_SACH" Association="Self.FK_DON_GIA_SACH">
+            <End Role="SACH" EntitySet="SACH" />
+            <End Role="DON_GIA" EntitySet="DON_GIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DON_NHAP_HANG_NHA_CUNG_CAP" Association="Self.FK_DON_NHAP_HANG_NHA_CUNG_CAP">
             <End Role="NHA_CUNG_CAP" EntitySet="NHA_CUNG_CAP" />
-            <End Role="CHI_TIET_NCC" EntitySet="CHI_TIET_NCC" />
+            <End Role="DON_NHAP_HANG" EntitySet="DON_NHAP_HANG" />
           </AssociationSet>
           <AssociationSet Name="FK_DON_NHAP_HANG_NHAN_VIEN" Association="Self.FK_DON_NHAP_HANG_NHAN_VIEN">
             <End Role="NHAN_VIEN" EntitySet="NHAN_VIEN" />
@@ -339,6 +421,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_SACH_DANG_SACH" Association="Self.FK_SACH_DANG_SACH">
             <End Role="DANG_SACH" EntitySet="DANG_SACH" />
+            <End Role="SACH" EntitySet="SACH" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SACH_DO_TUOI" Association="Self.FK_SACH_DO_TUOI">
+            <End Role="DO_TUOI" EntitySet="DO_TUOI" />
             <End Role="SACH" EntitySet="SACH" />
           </AssociationSet>
           <AssociationSet Name="FK_SACH_THE_LOAI" Association="Self.FK_SACH_THE_LOAI">
@@ -355,6 +441,49 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CSDLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CHI_TIET_HOA_DON">
+          <Key>
+            <PropertyRef Name="MA_SACH" />
+            <PropertyRef Name="MA_HD" />
+          </Key>
+          <Property Name="MA_SACH" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MA_HD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SL_SACH" Type="Int32" />
+          <NavigationProperty Name="HOA_DON" Relationship="Self.FK_CHI_TIET_HOA_DON_HOA_DON" FromRole="CHI_TIET_HOA_DON" ToRole="HOA_DON" />
+          <NavigationProperty Name="SACH" Relationship="Self.FK_CHI_TIET_HOA_DON_SACH" FromRole="CHI_TIET_HOA_DON" ToRole="SACH" />
+        </EntityType>
+        <EntityType Name="CHI_TIET_NHAP_HANG">
+          <Key>
+            <PropertyRef Name="MA_SACH" />
+            <PropertyRef Name="MA_DON_NHAP" />
+          </Key>
+          <Property Name="MA_SACH" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MA_DON_NHAP" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SL_NHAP" Type="Int32" />
+          <Property Name="GIA_NHAP" Type="Double" />
+          <NavigationProperty Name="DON_NHAP_HANG" Relationship="Self.FK_CHI_TIET_DON_NHAP_DON_NHAP_HANG" FromRole="CHI_TIET_NHAP_HANG" ToRole="DON_NHAP_HANG" />
+          <NavigationProperty Name="SACH" Relationship="Self.FK_CHI_TIET_DON_NHAP_SACH" FromRole="CHI_TIET_NHAP_HANG" ToRole="SACH" />
+        </EntityType>
+        <EntityType Name="CHUC_VU">
+          <Key>
+            <PropertyRef Name="MA_CV" />
+          </Key>
+          <Property Name="MA_CV" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TEN_CV" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CO_CV" Relationship="Self.FK_CO_CV_CHUC_VU" FromRole="CHUC_VU" ToRole="CO_CV" />
+        </EntityType>
+        <EntityType Name="CO_CV">
+          <Key>
+            <PropertyRef Name="MA_CV" />
+            <PropertyRef Name="MA_NV" />
+          </Key>
+          <Property Name="MA_CV" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MA_NV" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TG_NHAN_CHUC" Type="DateTime" Precision="0" />
+          <Property Name="TG_TU_CHUC" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CHUC_VU" Relationship="Self.FK_CO_CV_CHUC_VU" FromRole="CO_CV" ToRole="CHUC_VU" />
+          <NavigationProperty Name="NHAN_VIEN" Relationship="Self.FK_CO_CV_NHAN_VIEN" FromRole="CO_CV" ToRole="NHAN_VIEN" />
+        </EntityType>
         <EntityType Name="DANG_SACH">
           <Key>
             <PropertyRef Name="MA_DS" />
@@ -363,6 +492,24 @@
           <Property Name="TEN_DS" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SACHes" Relationship="Self.FK_SACH_DANG_SACH" FromRole="DANG_SACH" ToRole="SACH" />
         </EntityType>
+        <EntityType Name="DO_TUOI">
+          <Key>
+            <PropertyRef Name="MA_DT" />
+          </Key>
+          <Property Name="MA_DT" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TEN_DT" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SACHes" Relationship="Self.FK_SACH_DO_TUOI" FromRole="DO_TUOI" ToRole="SACH" />
+        </EntityType>
+        <EntityType Name="DON_GIA">
+          <Key>
+            <PropertyRef Name="MA_DG" />
+          </Key>
+          <Property Name="MA_DG" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SO_TIEN" Type="Double" />
+          <Property Name="NGAY_AP_DUNG" Type="DateTime" Precision="0" />
+          <Property Name="MA_SACH" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SACH" Relationship="Self.FK_DON_GIA_SACH" FromRole="DON_GIA" ToRole="SACH" />
+        </EntityType>
         <EntityType Name="DON_NHAP_HANG">
           <Key>
             <PropertyRef Name="MA_DON_NHAP" />
@@ -370,9 +517,11 @@
           <Property Name="MA_DON_NHAP" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MA_NV" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="NGAY_NHAP" Type="DateTime" Precision="0" />
+          <Property Name="TONG_CHI" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="MA_NCC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CHI_TIET_NHAP_HANG" Relationship="Self.FK_CHI_TIET_DON_NHAP_DON_NHAP_HANG" FromRole="DON_NHAP_HANG" ToRole="CHI_TIET_NHAP_HANG" />
+          <NavigationProperty Name="NHA_CUNG_CAP" Relationship="Self.FK_DON_NHAP_HANG_NHA_CUNG_CAP" FromRole="DON_NHAP_HANG" ToRole="NHA_CUNG_CAP" />
           <NavigationProperty Name="NHAN_VIEN" Relationship="Self.FK_DON_NHAP_HANG_NHAN_VIEN" FromRole="DON_NHAP_HANG" ToRole="NHAN_VIEN" />
-          <NavigationProperty Name="SACHes" Relationship="Self.CHI_TIET_DON_NHAP" FromRole="DON_NHAP_HANG" ToRole="SACH" />
-          <NavigationProperty Name="NHA_CUNG_CAP" Relationship="Self.CHI_TIET_NCC" FromRole="DON_NHAP_HANG" ToRole="NHA_CUNG_CAP" />
         </EntityType>
         <EntityType Name="HOA_DON">
           <Key>
@@ -381,8 +530,9 @@
           <Property Name="MA_HD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MA_NV" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="NGAY_LAP" Type="DateTime" Precision="0" />
+          <Property Name="THANH_TIEN" Type="Double" />
+          <NavigationProperty Name="CHI_TIET_HOA_DON" Relationship="Self.FK_CHI_TIET_HOA_DON_HOA_DON" FromRole="HOA_DON" ToRole="CHI_TIET_HOA_DON" />
           <NavigationProperty Name="NHAN_VIEN" Relationship="Self.FK_HOA_DON_NHAN_VIEN" FromRole="HOA_DON" ToRole="NHAN_VIEN" />
-          <NavigationProperty Name="SACHes" Relationship="Self.CHI_TIET_HOA_DON" FromRole="HOA_DON" ToRole="SACH" />
         </EntityType>
         <EntityType Name="KHUYEN_MAI">
           <Key>
@@ -405,7 +555,8 @@
           <Property Name="TEN_NCC" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="DIACHI" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="LIENLAC" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DON_NHAP_HANG" Relationship="Self.CHI_TIET_NCC" FromRole="NHA_CUNG_CAP" ToRole="DON_NHAP_HANG" />
+          <Property Name="TONG_NHAP" Type="Int32" />
+          <NavigationProperty Name="DON_NHAP_HANG" Relationship="Self.FK_DON_NHAP_HANG_NHA_CUNG_CAP" FromRole="NHA_CUNG_CAP" ToRole="DON_NHAP_HANG" />
         </EntityType>
         <EntityType Name="NHAN_VIEN">
           <Key>
@@ -416,6 +567,9 @@
           <Property Name="NAM_SINH" Type="DateTime" Precision="0" />
           <Property Name="NOI_SONG" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="SDT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NGAY_GIA_NHAP" Type="DateTime" Precision="0" />
+          <Property Name="NGAY_NGHI_VIEC" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CO_CV" Relationship="Self.FK_CO_CV_NHAN_VIEN" FromRole="NHAN_VIEN" ToRole="CO_CV" />
           <NavigationProperty Name="DON_NHAP_HANG" Relationship="Self.FK_DON_NHAP_HANG_NHAN_VIEN" FromRole="NHAN_VIEN" ToRole="DON_NHAP_HANG" />
           <NavigationProperty Name="HOA_DON" Relationship="Self.FK_HOA_DON_NHAN_VIEN" FromRole="NHAN_VIEN" ToRole="HOA_DON" />
           <NavigationProperty Name="TAI_KHOAN" Relationship="Self.FK_TAI_KHOAN_NHAN_VIEN" FromRole="NHAN_VIEN" ToRole="TAI_KHOAN" />
@@ -426,19 +580,22 @@
           </Key>
           <Property Name="MA_SACH" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MA_DS" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MA_DT" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="MA_TL" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="TEN_SACH" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="ANH_BIA" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="MO_TA_SACH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="GIA_BAN" Type="Int32" />
+          <Property Name="ANH_BIA" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="TAC_GIA" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="NHA_XB" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="NAM_XB" Type="DateTime" Precision="0" />
-          <Property Name="SOLUONG" Type="Int32" />
+          <Property Name="SL_BAN" Type="Int32" />
+          <Property Name="SL_TON" Type="Int32" />
+          <NavigationProperty Name="CHI_TIET_HOA_DON" Relationship="Self.FK_CHI_TIET_HOA_DON_SACH" FromRole="SACH" ToRole="CHI_TIET_HOA_DON" />
+          <NavigationProperty Name="CHI_TIET_NHAP_HANG" Relationship="Self.FK_CHI_TIET_DON_NHAP_SACH" FromRole="SACH" ToRole="CHI_TIET_NHAP_HANG" />
           <NavigationProperty Name="DANG_SACH" Relationship="Self.FK_SACH_DANG_SACH" FromRole="SACH" ToRole="DANG_SACH" />
+          <NavigationProperty Name="DO_TUOI" Relationship="Self.FK_SACH_DO_TUOI" FromRole="SACH" ToRole="DO_TUOI" />
+          <NavigationProperty Name="DON_GIA" Relationship="Self.FK_DON_GIA_SACH" FromRole="SACH" ToRole="DON_GIA" />
           <NavigationProperty Name="THE_LOAI" Relationship="Self.FK_SACH_THE_LOAI" FromRole="SACH" ToRole="THE_LOAI" />
-          <NavigationProperty Name="DON_NHAP_HANG" Relationship="Self.CHI_TIET_DON_NHAP" FromRole="SACH" ToRole="DON_NHAP_HANG" />
-          <NavigationProperty Name="HOA_DON" Relationship="Self.CHI_TIET_HOA_DON" FromRole="SACH" ToRole="HOA_DON" />
           <NavigationProperty Name="KHUYEN_MAI" Relationship="Self.CHI_TIET_KHUYEN_MAI" FromRole="SACH" ToRole="KHUYEN_MAI" />
         </EntityType>
         <EntityType Name="TAI_KHOAN">
@@ -459,6 +616,78 @@
           <Property Name="TEN_TL" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SACHes" Relationship="Self.FK_SACH_THE_LOAI" FromRole="THE_LOAI" ToRole="SACH" />
         </EntityType>
+        <Association Name="FK_CHI_TIET_HOA_DON_HOA_DON">
+          <End Role="HOA_DON" Type="Self.HOA_DON" Multiplicity="1" />
+          <End Role="CHI_TIET_HOA_DON" Type="Self.CHI_TIET_HOA_DON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOA_DON">
+              <PropertyRef Name="MA_HD" />
+            </Principal>
+            <Dependent Role="CHI_TIET_HOA_DON">
+              <PropertyRef Name="MA_HD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHI_TIET_HOA_DON_SACH">
+          <End Role="SACH" Type="Self.SACH" Multiplicity="1" />
+          <End Role="CHI_TIET_HOA_DON" Type="Self.CHI_TIET_HOA_DON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SACH">
+              <PropertyRef Name="MA_SACH" />
+            </Principal>
+            <Dependent Role="CHI_TIET_HOA_DON">
+              <PropertyRef Name="MA_SACH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHI_TIET_DON_NHAP_DON_NHAP_HANG">
+          <End Role="DON_NHAP_HANG" Type="Self.DON_NHAP_HANG" Multiplicity="1" />
+          <End Role="CHI_TIET_NHAP_HANG" Type="Self.CHI_TIET_NHAP_HANG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DON_NHAP_HANG">
+              <PropertyRef Name="MA_DON_NHAP" />
+            </Principal>
+            <Dependent Role="CHI_TIET_NHAP_HANG">
+              <PropertyRef Name="MA_DON_NHAP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHI_TIET_DON_NHAP_SACH">
+          <End Role="SACH" Type="Self.SACH" Multiplicity="1" />
+          <End Role="CHI_TIET_NHAP_HANG" Type="Self.CHI_TIET_NHAP_HANG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SACH">
+              <PropertyRef Name="MA_SACH" />
+            </Principal>
+            <Dependent Role="CHI_TIET_NHAP_HANG">
+              <PropertyRef Name="MA_SACH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_CV_CHUC_VU">
+          <End Role="CHUC_VU" Type="Self.CHUC_VU" Multiplicity="1" />
+          <End Role="CO_CV" Type="Self.CO_CV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUC_VU">
+              <PropertyRef Name="MA_CV" />
+            </Principal>
+            <Dependent Role="CO_CV">
+              <PropertyRef Name="MA_CV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_CV_NHAN_VIEN">
+          <End Role="NHAN_VIEN" Type="Self.NHAN_VIEN" Multiplicity="1" />
+          <End Role="CO_CV" Type="Self.CO_CV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHAN_VIEN">
+              <PropertyRef Name="MA_NV" />
+            </Principal>
+            <Dependent Role="CO_CV">
+              <PropertyRef Name="MA_NV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SACH_DANG_SACH">
           <End Role="DANG_SACH" Type="Self.DANG_SACH" Multiplicity="0..1" />
           <End Role="SACH" Type="Self.SACH" Multiplicity="*" />
@@ -468,6 +697,42 @@
             </Principal>
             <Dependent Role="SACH">
               <PropertyRef Name="MA_DS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SACH_DO_TUOI">
+          <End Role="DO_TUOI" Type="Self.DO_TUOI" Multiplicity="0..1" />
+          <End Role="SACH" Type="Self.SACH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DO_TUOI">
+              <PropertyRef Name="MA_DT" />
+            </Principal>
+            <Dependent Role="SACH">
+              <PropertyRef Name="MA_DT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DON_GIA_SACH">
+          <End Role="SACH" Type="Self.SACH" Multiplicity="0..1" />
+          <End Role="DON_GIA" Type="Self.DON_GIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SACH">
+              <PropertyRef Name="MA_SACH" />
+            </Principal>
+            <Dependent Role="DON_GIA">
+              <PropertyRef Name="MA_SACH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DON_NHAP_HANG_NHA_CUNG_CAP">
+          <End Role="NHA_CUNG_CAP" Type="Self.NHA_CUNG_CAP" Multiplicity="0..1" />
+          <End Role="DON_NHAP_HANG" Type="Self.DON_NHAP_HANG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHA_CUNG_CAP">
+              <PropertyRef Name="MA_NCC" />
+            </Principal>
+            <Dependent Role="DON_NHAP_HANG">
+              <PropertyRef Name="MA_NCC" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -519,24 +784,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CHI_TIET_DON_NHAP">
-          <End Role="DON_NHAP_HANG" Type="Self.DON_NHAP_HANG" Multiplicity="*" />
-          <End Role="SACH" Type="Self.SACH" Multiplicity="*" />
-        </Association>
-        <Association Name="CHI_TIET_HOA_DON">
-          <End Role="HOA_DON" Type="Self.HOA_DON" Multiplicity="*" />
-          <End Role="SACH" Type="Self.SACH" Multiplicity="*" />
-        </Association>
         <Association Name="CHI_TIET_KHUYEN_MAI">
           <End Role="KHUYEN_MAI" Type="Self.KHUYEN_MAI" Multiplicity="*" />
           <End Role="SACH" Type="Self.SACH" Multiplicity="*" />
         </Association>
-        <Association Name="CHI_TIET_NCC">
-          <End Role="DON_NHAP_HANG" Type="Self.DON_NHAP_HANG" Multiplicity="*" />
-          <End Role="NHA_CUNG_CAP" Type="Self.NHA_CUNG_CAP" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="CSDLEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CHI_TIET_HOA_DON" EntityType="Self.CHI_TIET_HOA_DON" />
+          <EntitySet Name="CHI_TIET_NHAP_HANG" EntityType="Self.CHI_TIET_NHAP_HANG" />
+          <EntitySet Name="CHUC_VU" EntityType="Self.CHUC_VU" />
+          <EntitySet Name="CO_CV" EntityType="Self.CO_CV" />
           <EntitySet Name="DANG_SACH" EntityType="Self.DANG_SACH" />
+          <EntitySet Name="DO_TUOI" EntityType="Self.DO_TUOI" />
+          <EntitySet Name="DON_GIA" EntityType="Self.DON_GIA" />
           <EntitySet Name="DON_NHAP_HANG" EntityType="Self.DON_NHAP_HANG" />
           <EntitySet Name="HOA_DON" EntityType="Self.HOA_DON" />
           <EntitySet Name="KHUYEN_MAI" EntityType="Self.KHUYEN_MAI" />
@@ -545,9 +804,45 @@
           <EntitySet Name="SACHes" EntityType="Self.SACH" />
           <EntitySet Name="TAI_KHOAN" EntityType="Self.TAI_KHOAN" />
           <EntitySet Name="THE_LOAI" EntityType="Self.THE_LOAI" />
+          <AssociationSet Name="FK_CHI_TIET_HOA_DON_HOA_DON" Association="Self.FK_CHI_TIET_HOA_DON_HOA_DON">
+            <End Role="HOA_DON" EntitySet="HOA_DON" />
+            <End Role="CHI_TIET_HOA_DON" EntitySet="CHI_TIET_HOA_DON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHI_TIET_HOA_DON_SACH" Association="Self.FK_CHI_TIET_HOA_DON_SACH">
+            <End Role="SACH" EntitySet="SACHes" />
+            <End Role="CHI_TIET_HOA_DON" EntitySet="CHI_TIET_HOA_DON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHI_TIET_DON_NHAP_DON_NHAP_HANG" Association="Self.FK_CHI_TIET_DON_NHAP_DON_NHAP_HANG">
+            <End Role="DON_NHAP_HANG" EntitySet="DON_NHAP_HANG" />
+            <End Role="CHI_TIET_NHAP_HANG" EntitySet="CHI_TIET_NHAP_HANG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHI_TIET_DON_NHAP_SACH" Association="Self.FK_CHI_TIET_DON_NHAP_SACH">
+            <End Role="SACH" EntitySet="SACHes" />
+            <End Role="CHI_TIET_NHAP_HANG" EntitySet="CHI_TIET_NHAP_HANG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_CV_CHUC_VU" Association="Self.FK_CO_CV_CHUC_VU">
+            <End Role="CHUC_VU" EntitySet="CHUC_VU" />
+            <End Role="CO_CV" EntitySet="CO_CV" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_CV_NHAN_VIEN" Association="Self.FK_CO_CV_NHAN_VIEN">
+            <End Role="NHAN_VIEN" EntitySet="NHAN_VIEN" />
+            <End Role="CO_CV" EntitySet="CO_CV" />
+          </AssociationSet>
           <AssociationSet Name="FK_SACH_DANG_SACH" Association="Self.FK_SACH_DANG_SACH">
             <End Role="DANG_SACH" EntitySet="DANG_SACH" />
             <End Role="SACH" EntitySet="SACHes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SACH_DO_TUOI" Association="Self.FK_SACH_DO_TUOI">
+            <End Role="DO_TUOI" EntitySet="DO_TUOI" />
+            <End Role="SACH" EntitySet="SACHes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DON_GIA_SACH" Association="Self.FK_DON_GIA_SACH">
+            <End Role="SACH" EntitySet="SACHes" />
+            <End Role="DON_GIA" EntitySet="DON_GIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DON_NHAP_HANG_NHA_CUNG_CAP" Association="Self.FK_DON_NHAP_HANG_NHA_CUNG_CAP">
+            <End Role="NHA_CUNG_CAP" EntitySet="NHA_CUNG_CAP" />
+            <End Role="DON_NHAP_HANG" EntitySet="DON_NHAP_HANG" />
           </AssociationSet>
           <AssociationSet Name="FK_DON_NHAP_HANG_NHAN_VIEN" Association="Self.FK_DON_NHAP_HANG_NHAN_VIEN">
             <End Role="NHAN_VIEN" EntitySet="NHAN_VIEN" />
@@ -565,21 +860,9 @@
             <End Role="THE_LOAI" EntitySet="THE_LOAI" />
             <End Role="SACH" EntitySet="SACHes" />
           </AssociationSet>
-          <AssociationSet Name="CHI_TIET_DON_NHAP" Association="Self.CHI_TIET_DON_NHAP">
-            <End Role="DON_NHAP_HANG" EntitySet="DON_NHAP_HANG" />
-            <End Role="SACH" EntitySet="SACHes" />
-          </AssociationSet>
-          <AssociationSet Name="CHI_TIET_HOA_DON" Association="Self.CHI_TIET_HOA_DON">
-            <End Role="HOA_DON" EntitySet="HOA_DON" />
-            <End Role="SACH" EntitySet="SACHes" />
-          </AssociationSet>
           <AssociationSet Name="CHI_TIET_KHUYEN_MAI" Association="Self.CHI_TIET_KHUYEN_MAI">
             <End Role="KHUYEN_MAI" EntitySet="KHUYEN_MAI" />
             <End Role="SACH" EntitySet="SACHes" />
-          </AssociationSet>
-          <AssociationSet Name="CHI_TIET_NCC" Association="Self.CHI_TIET_NCC">
-            <End Role="DON_NHAP_HANG" EntitySet="DON_NHAP_HANG" />
-            <End Role="NHA_CUNG_CAP" EntitySet="NHA_CUNG_CAP" />
           </AssociationSet>
           <FunctionImport Name="Sp_Login" ReturnType="Collection(Boolean)">
             <Parameter Name="Username" Mode="In" Type="String" />
@@ -592,11 +875,66 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CSDLModelStoreContainer" CdmEntityContainer="CSDLEntities">
+          <EntitySetMapping Name="CHI_TIET_HOA_DON">
+            <EntityTypeMapping TypeName="CSDLModel.CHI_TIET_HOA_DON">
+              <MappingFragment StoreEntitySet="CHI_TIET_HOA_DON">
+                <ScalarProperty Name="MA_SACH" ColumnName="MA_SACH" />
+                <ScalarProperty Name="MA_HD" ColumnName="MA_HD" />
+                <ScalarProperty Name="SL_SACH" ColumnName="SL_SACH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHI_TIET_NHAP_HANG">
+            <EntityTypeMapping TypeName="CSDLModel.CHI_TIET_NHAP_HANG">
+              <MappingFragment StoreEntitySet="CHI_TIET_NHAP_HANG">
+                <ScalarProperty Name="MA_SACH" ColumnName="MA_SACH" />
+                <ScalarProperty Name="MA_DON_NHAP" ColumnName="MA_DON_NHAP" />
+                <ScalarProperty Name="SL_NHAP" ColumnName="SL_NHAP" />
+                <ScalarProperty Name="GIA_NHAP" ColumnName="GIA_NHAP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHUC_VU">
+            <EntityTypeMapping TypeName="CSDLModel.CHUC_VU">
+              <MappingFragment StoreEntitySet="CHUC_VU">
+                <ScalarProperty Name="MA_CV" ColumnName="MA_CV" />
+                <ScalarProperty Name="TEN_CV" ColumnName="TEN_CV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_CV">
+            <EntityTypeMapping TypeName="CSDLModel.CO_CV">
+              <MappingFragment StoreEntitySet="CO_CV">
+                <ScalarProperty Name="MA_CV" ColumnName="MA_CV" />
+                <ScalarProperty Name="MA_NV" ColumnName="MA_NV" />
+                <ScalarProperty Name="TG_NHAN_CHUC" ColumnName="TG_NHAN_CHUC" />
+                <ScalarProperty Name="TG_TU_CHUC" ColumnName="TG_TU_CHUC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="DANG_SACH">
             <EntityTypeMapping TypeName="CSDLModel.DANG_SACH">
               <MappingFragment StoreEntitySet="DANG_SACH">
                 <ScalarProperty Name="MA_DS" ColumnName="MA_DS" />
                 <ScalarProperty Name="TEN_DS" ColumnName="TEN_DS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DO_TUOI">
+            <EntityTypeMapping TypeName="CSDLModel.DO_TUOI">
+              <MappingFragment StoreEntitySet="DO_TUOI">
+                <ScalarProperty Name="MA_DT" ColumnName="MA_DT" />
+                <ScalarProperty Name="TEN_DT" ColumnName="TEN_DT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DON_GIA">
+            <EntityTypeMapping TypeName="CSDLModel.DON_GIA">
+              <MappingFragment StoreEntitySet="DON_GIA">
+                <ScalarProperty Name="MA_DG" ColumnName="MA_DG" />
+                <ScalarProperty Name="SO_TIEN" ColumnName="SO_TIEN" />
+                <ScalarProperty Name="NGAY_AP_DUNG" ColumnName="NGAY_AP_DUNG" />
+                <ScalarProperty Name="MA_SACH" ColumnName="MA_SACH" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -606,6 +944,8 @@
                 <ScalarProperty Name="MA_DON_NHAP" ColumnName="MA_DON_NHAP" />
                 <ScalarProperty Name="MA_NV" ColumnName="MA_NV" />
                 <ScalarProperty Name="NGAY_NHAP" ColumnName="NGAY_NHAP" />
+                <ScalarProperty Name="TONG_CHI" ColumnName="TONG_CHI" />
+                <ScalarProperty Name="MA_NCC" ColumnName="MA_NCC" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -615,6 +955,7 @@
                 <ScalarProperty Name="MA_HD" ColumnName="MA_HD" />
                 <ScalarProperty Name="MA_NV" ColumnName="MA_NV" />
                 <ScalarProperty Name="NGAY_LAP" ColumnName="NGAY_LAP" />
+                <ScalarProperty Name="THANH_TIEN" ColumnName="THANH_TIEN" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -638,6 +979,7 @@
                 <ScalarProperty Name="TEN_NCC" ColumnName="TEN_NCC" />
                 <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
                 <ScalarProperty Name="LIENLAC" ColumnName="LIENLAC" />
+                <ScalarProperty Name="TONG_NHAP" ColumnName="TONG_NHAP" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -649,6 +991,8 @@
                 <ScalarProperty Name="NAM_SINH" ColumnName="NAM_SINH" />
                 <ScalarProperty Name="NOI_SONG" ColumnName="NOI_SONG" />
                 <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="NGAY_GIA_NHAP" ColumnName="NGAY_GIA_NHAP" />
+                <ScalarProperty Name="NGAY_NGHI_VIEC" ColumnName="NGAY_NGHI_VIEC" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -657,15 +1001,16 @@
               <MappingFragment StoreEntitySet="SACH">
                 <ScalarProperty Name="MA_SACH" ColumnName="MA_SACH" />
                 <ScalarProperty Name="MA_DS" ColumnName="MA_DS" />
+                <ScalarProperty Name="MA_DT" ColumnName="MA_DT" />
                 <ScalarProperty Name="MA_TL" ColumnName="MA_TL" />
                 <ScalarProperty Name="TEN_SACH" ColumnName="TEN_SACH" />
-                <ScalarProperty Name="ANH_BIA" ColumnName="ANH_BIA" />
                 <ScalarProperty Name="MO_TA_SACH" ColumnName="MO_TA_SACH" />
-                <ScalarProperty Name="GIA_BAN" ColumnName="GIA_BAN" />
+                <ScalarProperty Name="ANH_BIA" ColumnName="ANH_BIA" />
                 <ScalarProperty Name="TAC_GIA" ColumnName="TAC_GIA" />
                 <ScalarProperty Name="NHA_XB" ColumnName="NHA_XB" />
                 <ScalarProperty Name="NAM_XB" ColumnName="NAM_XB" />
-                <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
+                <ScalarProperty Name="SL_BAN" ColumnName="SL_BAN" />
+                <ScalarProperty Name="SL_TON" ColumnName="SL_TON" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -687,36 +1032,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="CHI_TIET_DON_NHAP" TypeName="CSDLModel.CHI_TIET_DON_NHAP" StoreEntitySet="CHI_TIET_DON_NHAP">
-            <EndProperty Name="DON_NHAP_HANG">
-              <ScalarProperty Name="MA_DON_NHAP" ColumnName="MA_DON_NHAP" />
-            </EndProperty>
-            <EndProperty Name="SACH">
-              <ScalarProperty Name="MA_SACH" ColumnName="MA_SACH" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="CHI_TIET_HOA_DON" TypeName="CSDLModel.CHI_TIET_HOA_DON" StoreEntitySet="CHI_TIET_HOA_DON">
-            <EndProperty Name="HOA_DON">
-              <ScalarProperty Name="MA_HD" ColumnName="MA_HD" />
-            </EndProperty>
-            <EndProperty Name="SACH">
-              <ScalarProperty Name="MA_SACH" ColumnName="MA_SACH" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="CHI_TIET_KHUYEN_MAI" TypeName="CSDLModel.CHI_TIET_KHUYEN_MAI" StoreEntitySet="CHI_TIET_KHUYEN_MAI">
             <EndProperty Name="KHUYEN_MAI">
               <ScalarProperty Name="MA_KM" ColumnName="MA_KM" />
             </EndProperty>
             <EndProperty Name="SACH">
               <ScalarProperty Name="MA_SACH" ColumnName="MA_SACH" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="CHI_TIET_NCC" TypeName="CSDLModel.CHI_TIET_NCC" StoreEntitySet="CHI_TIET_NCC">
-            <EndProperty Name="DON_NHAP_HANG">
-              <ScalarProperty Name="MA_DON_NHAP" ColumnName="MA_DON_NHAP" />
-            </EndProperty>
-            <EndProperty Name="NHA_CUNG_CAP">
-              <ScalarProperty Name="MA_NCC" ColumnName="MA_NCC" />
             </EndProperty>
           </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="Sp_Login" FunctionName="CSDLModel.Store.Sp_Login" />

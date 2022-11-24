@@ -64,7 +64,6 @@
                             }
                             <ul>
                                 <li><a href="@Url.Action("Details","Book", new { id = item.MA_SACH })"><i class="fas fa-expand"></i></a></li>
-                                <li><a onclick="AddToCart('@item.MA_SACH')"><i class="fas fa-shopping-cart"></i></a></li>
                                 <li>
                                     @using (Html.BeginForm("Delete", "Book", FormMethod.Post, new { id = "Delete" + item.MA_SACH }))
                                     {

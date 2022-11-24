@@ -12,21 +12,18 @@ namespace QLNS
     using System;
     using System.Collections.Generic;
     
-    public partial class NHA_CUNG_CAP
+    public partial class CHUC_VU
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public NHA_CUNG_CAP()
+        public CHUC_VU()
         {
-            this.DON_NHAP_HANG = new HashSet<DON_NHAP_HANG>();
+            this.CO_CV = new HashSet<CO_CV>();
         }
     
-        public string MA_NCC { get; set; }
-        public string TEN_NCC { get; set; }
-        public string DIACHI { get; set; }
-        public string LIENLAC { get; set; }
-        public Nullable<int> TONG_NHAP { get; set; }
+        public string MA_CV { get; set; }
+        public string TEN_CV { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DON_NHAP_HANG> DON_NHAP_HANG { get; set; }
+        public virtual ICollection<CO_CV> CO_CV { get; set; }
     }
 }

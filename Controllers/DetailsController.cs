@@ -1,4 +1,5 @@
 ﻿using QLNS.Code;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Web.Mvc;
 
 namespace QLNS.Controllers
 {
-    public class GenreController : Controller
+    public class DetailsController : Controller
     {
         private readonly CSDLEntities db = new CSDLEntities();
 
@@ -25,7 +26,7 @@ namespace QLNS.Controllers
         public ActionResult Index()
         {
             if (IsLogin()!=null) return IsLogin();
-            return View(db.THE_LOAI.ToList());
+            return View(db.THE_LOAI.Where(x => x.DELETED_AT == null).ToList());
         }
         //GET Them the loai
         public ActionResult Create()
@@ -94,7 +95,8 @@ namespace QLNS.Controllers
         {
             if (IsLogin()!=null) return IsLogin();
             THE_LOAI tl = db.THE_LOAI.Find(id);
-            db.THE_LOAI.Remove(tl);
+            tl.DELETED_AT = DateTime.Now;
+            //db.THE_LOAI.Remove(tl);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

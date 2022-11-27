@@ -24,9 +24,8 @@ namespace QLNS.Controllers
         // GET: Order
         public ActionResult Index()
         {
-
             if (IsLogin() != null) return IsLogin();
-            return View(db.HOA_DON.ToList());
+            return View(db.HOA_DON.Where(x => x.DELETED_AT == null).ToList());
         }
     }
 }

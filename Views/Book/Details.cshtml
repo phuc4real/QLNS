@@ -4,53 +4,16 @@
     ViewBag.Title = "Thông tin sách";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<script>
-    function enableEdit() {
-        $("#UP_ANH_BIA").removeAttr('hidden');
-        $("#Edit_Button").removeAttr('hidden');
-        $('#enable_Edit').attr('hidden', true);
-        $('#disable_Edit').removeAttr('hidden');
-        $("#TEN_SACH").removeAttr('readonly');
-        $("#MA_DS").removeAttr('Disabled');
-        $("#MA_TL").removeAttr('Disabled');
-        $("#MA_DT").removeAttr('Disabled');
-        $("#SO_TIEN").removeAttr('readonly');
-        $("#TAC_GIA").removeAttr('readonly');
-        $("#NHA_XB").removeAttr('readonly');
-        $("#NAM_XB").removeAttr('readonly');
-        $("#SL_TON").removeAttr('readonly');
-        $("#MO_TA_SACH").removeAttr('readonly');
-
-    }
-    function disableEdit() {
-        $("#UP_ANH_BIA").attr('hidden', true);
-        $("#Edit_Button").attr('hidden', true);
-        $('#enable_Edit').removeAttr('hidden');
-        $('#disable_Edit').attr('hidden', true);
-        $("#TEN_SACH").attr('readonly', true);
-        $("#MA_DS").prop("disabled", true);
-        $("#MA_TL").prop("disabled", true);
-        $("#MA_DT").prop("disabled", true);
-        $("#SO_TIEN").attr('readonly', true);
-        $("#TAC_GIA").attr('readonly', true);
-        $("#NHA_XB").attr('readonly', true);
-        $("#NAM_XB").attr('readonly', true);
-        $("#SL_TON").attr('readonly', true);
-        $("#MO_TA_SACH").attr('readonly', true);
-    }
-</script>
-
 <section class="page-section">
     <div class="container">
         <div class="d-flex">
             <div class="flex-grow-1">
                 <h2>Thông tin chi tiết sách</h2>
             </div>
-            <button class="btn btn-outline-info" id="enable_Edit" onclick="enableEdit()">
+            <button class="btn btn-outline-info" id="enable_Edit" onclick="enableEditCB()">
                 <i class="fa-regular fa-pen-to-square"></i> Chỉnh sửa
             </button>
-            <button class="btn btn-outline-danger" id="disable_Edit" onclick="disableEdit()" hidden>
+            <button class="btn btn-outline-danger" id="disable_Edit" onclick="disableEditCB()" hidden>
                 <i class="fa-solid fa-x"></i> Huỷ
             </button>
                 <a class="btn btn-outline-info ms-1 d-flex align-items-center" href="/"><i class="fa-solid fa-arrow-left p-1"></i> Trở về</a>

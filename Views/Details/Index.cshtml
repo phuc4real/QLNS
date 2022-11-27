@@ -4,29 +4,6 @@
     ViewBag.Title = "Thể loại";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script>
-    function submitResult(e, id) {
-        e.preventDefault();
-        Swal.fire({
-            title: 'Xác nhận',
-            text: "Xóa thể loại này?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Xác nhận!',
-            cancelButtonText: 'Hủy'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Đã xóa!',
-                    'Thể loại đã được xoá.',
-                    'success'
-                ).then((result) => document.getElementById("Delete" + id).submit())
-            }
-        })
-    }
-</script>
 <section class="page-section">
     <div class="container">
         <div class="d-flex">
@@ -34,7 +11,7 @@
                 <h2>Quản lý thể loại</h2>
             </div>
             <div class="d-flex p-1">
-                <a class="btn btn-outline-success ms-1" href="/Genre/Create">Thêm</a>
+                <a class="btn btn-outline-success ms-1" href="@Request.Url.AbsolutePath/Create">Thêm</a>
             </div>
         </div>
         <div class="row m-3 border-bottom border-info"></div>
@@ -55,12 +32,12 @@
                             @Html.DisplayFor(modelItem => item.TEN_TL)
                         </td>
                         <td class="d-flex align-items-center">
-                            <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="/Genre/Edit/@item.MA_TL"><i class="fa-regular fa-pen-to-square"></i></a>
-                            @using (Html.BeginForm("Delete", "Genre", FormMethod.Post, new { id = "Delete" + item.MA_TL }))
+                            <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="@Request.Url.AbsolutePath/Edit/@item.MA_TL"><i class="fa-regular fa-pen-to-square"></i></a>
+                            @using (Html.BeginForm("Delete", "Details", FormMethod.Post, new { id = "Delete" + item.MA_TL }))
                             {
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" value="@item.MA_TL" name="id" id="id" />
-                                <a role="button" class="tool" onclick="return submitResult(event,'@item.MA_TL')"><i class="fa-solid fa-trash"></i></a>
+                                <a role="button" class="tool" onclick="return submitResult(event,'@item.MA_TL','Thể loại')"><i class="fa-solid fa-trash"></i></a>
                             }
                         </td>
                     </tr>

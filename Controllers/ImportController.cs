@@ -23,7 +23,7 @@ namespace QLNS.Controllers
         public ActionResult Index()
         {
             if (IsLogin() != null) return IsLogin();
-            return View(db.DON_NHAP_HANG.ToList());
+            return View(db.DON_NHAP_HANG.Where(x => x.DELETED_AT == null).ToList());
         }
     }
 }

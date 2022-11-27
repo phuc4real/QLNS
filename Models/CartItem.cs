@@ -11,7 +11,7 @@ namespace QLNS.Models
         public int Quantity { get; set; }
         public double SumPrice()
         {
-            double s = (double)(Quantity * SachOrder.DON_GIA.OrderByDescending(e => e.NGAY_AP_DUNG).First().SO_TIEN);
+            double s = (double)(Quantity * SachOrder.DON_GIA.OrderByDescending(e => e.MA_DG).DefaultIfEmpty().First().SO_TIEN);
             return s;
         }
     }

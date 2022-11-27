@@ -3,6 +3,7 @@ using QLNS.Code;
 using QLNS.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -27,7 +28,7 @@ namespace QLNS.Controllers
         {
             int PageSize = 8;
             int PageNumber = (page ?? 1);
-            return db.SACHes.OrderBy(x => x.MA_SACH).ToPagedList(PageNumber, PageSize);
+            return db.SACHes.Where(x => x.DELETED_AT == null).OrderBy(x => x.MA_SACH).ToPagedList(PageNumber, PageSize);
         }
         //Danh sach san pham sach
         public ActionResult Index(int? page)
@@ -42,7 +43,7 @@ namespace QLNS.Controllers
         private List<SelectListItem> GetGenres()
         {
             var listGenre = new List<SelectListItem>();
-            listGenre = db.THE_LOAI.Select(t => new SelectListItem()
+            listGenre = db.THE_LOAI.Where(x => x.DELETED_AT == null).Select(t => new SelectListItem()
             {
                 Value = t.MA_TL.ToString(),
                 Text = t.TEN_TL
@@ -54,7 +55,7 @@ namespace QLNS.Controllers
         private List<SelectListItem> GetTypes()
         {
             var listType = new List<SelectListItem>();
-            listType = db.DANG_SACH.Select(t => new SelectListItem()
+            listType = db.DANG_SACH.Where(x => x.DELETED_AT == null).Select(t => new SelectListItem()
             {
                 Value = t.MA_DS.ToString(),
                 Text = t.TEN_DS
@@ -62,6 +63,19 @@ namespace QLNS.Controllers
 
             return listType;
         }
+        //Lay ds do duoi
+        private List<SelectListItem> GetAges()
+        {
+            var listAge = new List<SelectListItem>();
+            listAge = db.DO_TUOI.Where(x => x.DELETED_AT == null).Select(t => new SelectListItem()
+            {
+                Value = t.MA_DT.ToString(),
+                Text = t.TEN_DT
+            }).ToList();
+
+            return listAge;
+        }
+
         //Thong tin chi tiet
         public ActionResult Details(string id)
         {
@@ -79,6 +93,7 @@ namespace QLNS.Controllers
 
             ViewBag.Genres = GetGenres();
             ViewBag.Types = GetTypes();
+            ViewBag.Ages = GetAges();
 
             return View(sach);
         }
@@ -86,11 +101,11 @@ namespace QLNS.Controllers
         public ActionResult SearchBook(string term, int? page)
         {
             if (IsLogin() != null) return IsLogin();
-            if (term == null) return Redirect("/");
+            if (term == null) return RedirectToAction("Index");
             if (page == null) page = 1;
             var s = term.ToLower();
-            var result = db.SACHes
-                            .Where(b => b.MA_SACH.ToLower().Contains(s) ||
+            var sachs = db.SACHes.Where(x => x.DELETED_AT == null);
+            var result = sachs.Where(b => b.MA_SACH.ToLower().Contains(s) ||
                                    b.TEN_SACH.ToLower().Contains(s) ||
                                    b.TAC_GIA.ToLower().Contains(s) ||
                                    b.NHA_XB.ToLower().Contains(s))
@@ -105,7 +120,6 @@ namespace QLNS.Controllers
         public JsonResult UpdateCart(string id, string quality)
         {
             List<CartItem> listCartItem = (List<CartItem>)Session["ShoppingCart"];
-
             double sum = 0, total = 0;
             string err = "";
             int cartcount = 0;
@@ -205,6 +219,39 @@ namespace QLNS.Controllers
         {
             if (IsLogin() != null) return IsLogin();
             return View();
+        }
+
+        public ActionResult Payment(double Total)
+        {
+            List<CartItem> cart = (List<CartItem>)Session["ShoppingCart"];
+            var user = SessionHelper.GetSession().Get();
+            var nv = db.TAI_KHOAN.Where(x => x.USERNAME == user).SingleOrDefault().NHAN_VIEN;
+            //Them hoa don
+            HOA_DON hd = new HOA_DON
+            {
+                NHAN_VIEN = nv,
+                NGAY_LAP = DateTime.Now,
+                THANH_TIEN = Total
+            };
+            db.HOA_DON.Add(hd);
+
+            //Them chi tiet hoa don
+            foreach (CartItem item in cart)
+            {
+                CHI_TIET_HOA_DON cthd = new CHI_TIET_HOA_DON()
+                {
+                    MA_HD = hd.MA_HD,
+                    MA_SACH = item.SachOrder.MA_SACH,
+                    SL_SACH = item.Quantity
+                };
+                db.CHI_TIET_HOA_DON.Add(cthd);
+                
+            }
+
+            db.SaveChanges();
+            Session.Remove("ShoppingCart");
+
+            return Redirect("/Invoice");
         }
     }
 }

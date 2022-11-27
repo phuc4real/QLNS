@@ -21,15 +21,6 @@
         ViewBag.count = 0;
     }
 }
-<script>
-    function AddToCart(MA_SACH) {
-        $.ajax({
-            type: 'POST', url: '/Sale/AddToCart', data: { id: MA_SACH }, success: function (data) {
-                $("#Cart_Amount").html(data.ItemAmount);
-            }
-        });
-    }
-</script>
 <section class="section-products">
     <div class="container">
         <div class="d-flex">

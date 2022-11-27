@@ -1,5 +1,6 @@
 ﻿using PagedList;
 using QLNS.Code;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -24,18 +25,18 @@ namespace QLNS.Controllers
             else if (SessionHelper.GetPermission() != "admin") res = Redirect("/");
             return res;
         }
-        public IEnumerable<NHAN_VIEN> BooksPaged(int? page)
+        public IEnumerable<NHAN_VIEN> StaffsPaged(int? page)
         {
             int PageSize = 4;
             int PageNumber = (page ?? 1);
-            return db.NHAN_VIEN.OrderBy(x => x.MA_NV).ToPagedList(PageNumber, PageSize);
+            return db.NHAN_VIEN.Where(x => x.DELETED_AT == null).OrderBy(x => x.MA_NV).ToPagedList(PageNumber, PageSize);
         }
         // GET: Staff
         public ActionResult Index(int? page)
         {
             if (LoginPermission() != null) return LoginPermission();
             if (page == null) page = 1;
-            var list = BooksPaged(page);
+            var list = StaffsPaged(page);
             return View(list);
         }
         //Xoa nhan vien
@@ -46,10 +47,11 @@ namespace QLNS.Controllers
             if (LoginPermission() != null) return LoginPermission();
             //Xoa tai khoan
             TAI_KHOAN tk = db.TAI_KHOAN.Where(s => s.MA_NV == id).SingleOrDefault();
-            if (tk != null) db.TAI_KHOAN.Remove(tk);
+            if (tk != null) tk.DELETED_AT = DateTime.Now; //db.TAI_KHOAN.Remove(tk);
             //Xoa nhan vien
             NHAN_VIEN nv = db.NHAN_VIEN.Find(id);
-            db.NHAN_VIEN.Remove(nv);
+            nv.DELETED_AT = DateTime.Now;
+            //db.NHAN_VIEN.Remove(nv);
 
             db.SaveChanges();
 

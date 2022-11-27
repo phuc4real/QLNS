@@ -24,7 +24,7 @@ namespace QLNS.Controllers
         public ActionResult Index()
         {
             if (IsLogin() != null) return IsLogin();
-            return View(db.KHUYEN_MAI.ToList());
+            return View(db.KHUYEN_MAI.Where(x => x.DELETED_AT == null).ToList());
         }
     }
 }

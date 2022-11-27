@@ -25,7 +25,7 @@ namespace QLNS.Controllers
         // GET: Supplier
         public ActionResult Index()
         {
-            return View(db.NHA_CUNG_CAP.ToList());
+            return View(db.NHA_CUNG_CAP.Where(x => x.DELETED_AT == null).ToList());
         }
     }
 }

@@ -22,6 +22,7 @@ namespace QLNS
     
         public string MA_TL { get; set; }
         public string TEN_TL { get; set; }
+        public Nullable<System.DateTime> DELETED_AT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SACH> SACHes { get; set; }

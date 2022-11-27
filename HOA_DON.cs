@@ -20,10 +20,11 @@ namespace QLNS
             this.CHI_TIET_HOA_DON = new HashSet<CHI_TIET_HOA_DON>();
         }
     
-        public string MA_HD { get; set; }
+        public int MA_HD { get; set; }
         public string MA_NV { get; set; }
         public Nullable<System.DateTime> NGAY_LAP { get; set; }
         public Nullable<double> THANH_TIEN { get; set; }
+        public Nullable<System.DateTime> DELETED_AT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHI_TIET_HOA_DON> CHI_TIET_HOA_DON { get; set; }

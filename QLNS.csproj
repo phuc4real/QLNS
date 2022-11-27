@@ -145,6 +145,9 @@
     <Compile Include="CHI_TIET_HOA_DON.cs">
       <DependentUpon>CSDL.tt</DependentUpon>
     </Compile>
+    <Compile Include="CHI_TIET_KHUYEN_MAI.cs">
+      <DependentUpon>CSDL.tt</DependentUpon>
+    </Compile>
     <Compile Include="CHI_TIET_NHAP_HANG.cs">
       <DependentUpon>CSDL.tt</DependentUpon>
     </Compile>

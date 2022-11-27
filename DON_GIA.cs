@@ -14,10 +14,11 @@ namespace QLNS
     
     public partial class DON_GIA
     {
-        public string MA_DG { get; set; }
+        public int MA_DG { get; set; }
         public Nullable<double> SO_TIEN { get; set; }
         public Nullable<System.DateTime> NGAY_AP_DUNG { get; set; }
         public string MA_SACH { get; set; }
+        public Nullable<System.DateTime> DELETED_AT { get; set; }
     
         public virtual SACH SACH { get; set; }
     }

@@ -15,8 +15,9 @@ namespace QLNS
     public partial class CHI_TIET_HOA_DON
     {
         public string MA_SACH { get; set; }
-        public string MA_HD { get; set; }
+        public int MA_HD { get; set; }
         public Nullable<int> SL_SACH { get; set; }
+        public Nullable<System.DateTime> DELETED_AT { get; set; }
     
         public virtual HOA_DON HOA_DON { get; set; }
         public virtual SACH SACH { get; set; }

@@ -15,9 +15,10 @@ namespace QLNS
     public partial class CHI_TIET_NHAP_HANG
     {
         public string MA_SACH { get; set; }
-        public string MA_DON_NHAP { get; set; }
+        public int MA_DON_NHAP { get; set; }
         public Nullable<int> SL_NHAP { get; set; }
         public Nullable<double> GIA_NHAP { get; set; }
+        public Nullable<System.DateTime> DELETED_AT { get; set; }
     
         public virtual DON_NHAP_HANG DON_NHAP_HANG { get; set; }
         public virtual SACH SACH { get; set; }

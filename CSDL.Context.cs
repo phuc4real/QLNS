@@ -28,6 +28,7 @@ namespace QLNS
         }
     
         public virtual DbSet<CHI_TIET_HOA_DON> CHI_TIET_HOA_DON { get; set; }
+        public virtual DbSet<CHI_TIET_KHUYEN_MAI> CHI_TIET_KHUYEN_MAI { get; set; }
         public virtual DbSet<CHI_TIET_NHAP_HANG> CHI_TIET_NHAP_HANG { get; set; }
         public virtual DbSet<CHUC_VU> CHUC_VU { get; set; }
         public virtual DbSet<CO_CV> CO_CV { get; set; }

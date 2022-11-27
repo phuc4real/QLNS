@@ -18,6 +18,7 @@ namespace QLNS
         public string MA_NV { get; set; }
         public Nullable<System.DateTime> TG_NHAN_CHUC { get; set; }
         public Nullable<System.DateTime> TG_TU_CHUC { get; set; }
+        public Nullable<System.DateTime> DELETED_AT { get; set; }
     
         public virtual CHUC_VU CHUC_VU { get; set; }
         public virtual NHAN_VIEN NHAN_VIEN { get; set; }

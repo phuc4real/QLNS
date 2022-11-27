@@ -18,6 +18,7 @@ namespace QLNS
         public string MA_NV { get; set; }
         public string PASSWORD { get; set; }
         public string QUYEN { get; set; }
+        public Nullable<System.DateTime> DELETED_AT { get; set; }
     
         public virtual NHAN_VIEN NHAN_VIEN { get; set; }
     }

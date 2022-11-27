@@ -39,6 +39,21 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label>Tác Giả</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.TAC_GIA, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TAC_GIA, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Đơn giá</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DON_GIA.OrderByDescending(e => e.NGAY_AP_DUNG).DefaultIfEmpty().First().SO_TIEN, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DON_GIA.OrderByDescending(e => e.NGAY_AP_DUNG).DefaultIfEmpty().First().SO_TIEN, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label>Ảnh bìa</label>
                         <div class="form-group align-content-center">
                             <img src="~/Assets/img/book/default.jpg" width="300" height="300" class="rounded mx-auto d-block" />
@@ -72,17 +87,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Giá bán</label>
+                        <label>Độ tuổi</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.GIA_BAN, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.GIA_BAN, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Tác Giả</label>
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.TAC_GIA, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.TAC_GIA, "", new { @class = "text-danger" })
+                            @Html.DropDownList("MA_DT", (IEnumerable<SelectListItem>)ViewBag.Ages, "---Chọn độ tuổi--", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MA_DT, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -102,8 +110,8 @@
                     <div class="form-group">
                         <label>Số lượng tồn</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.SOLUONG, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.SOLUONG, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.SL_TON, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SL_TON, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">

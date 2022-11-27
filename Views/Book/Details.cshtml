@@ -14,11 +14,12 @@
         $("#TEN_SACH").removeAttr('readonly');
         $("#MA_DS").removeAttr('Disabled');
         $("#MA_TL").removeAttr('Disabled');
-        $("#GIA_BAN").removeAttr('readonly');
+        $("#MA_DT").removeAttr('Disabled');
+        $("#SO_TIEN").removeAttr('readonly');
         $("#TAC_GIA").removeAttr('readonly');
         $("#NHA_XB").removeAttr('readonly');
         $("#NAM_XB").removeAttr('readonly');
-        $("#SOLUONG").removeAttr('readonly');
+        $("#SL_TON").removeAttr('readonly');
         $("#MO_TA_SACH").removeAttr('readonly');
 
     }
@@ -30,11 +31,12 @@
         $("#TEN_SACH").attr('readonly', true);
         $("#MA_DS").prop("disabled", true);
         $("#MA_TL").prop("disabled", true);
-        $("#GIA_BAN").attr('readonly', true);
+        $("#MA_DT").prop("disabled", true);
+        $("#SO_TIEN").attr('readonly', true);
         $("#TAC_GIA").attr('readonly', true);
         $("#NHA_XB").attr('readonly', true);
         $("#NAM_XB").attr('readonly', true);
-        $("#SOLUONG").attr('readonly', true);
+        $("#SL_TON").attr('readonly', true);
         $("#MO_TA_SACH").attr('readonly', true);
     }
 </script>
@@ -72,6 +74,20 @@
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.TEN_SACH, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                             @Html.ValidationMessageFor(model => model.TEN_SACH, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tác Giả</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.TAC_GIA, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.TAC_GIA, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Đơn giá</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DON_GIA.OrderByDescending(e => e.MA_DG).DefaultIfEmpty().First().SO_TIEN, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.DON_GIA.OrderByDescending(e => e.MA_DG).DefaultIfEmpty().First().SO_TIEN, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -120,17 +136,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Giá bán</label>
+                        <label>Độ tuổi</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.DON_GIA.OrderByDescending(e => e.NGAY_AP_DUNG).DefaultIfEmpty().First().SO_TIEN, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                            @Html.ValidationMessageFor(model => model.DON_GIA.OrderByDescending(e => e.NGAY_AP_DUNG).DefaultIfEmpty().First().SO_TIEN, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Tác Giả</label>
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.TAC_GIA, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                            @Html.ValidationMessageFor(model => model.TAC_GIA, "", new { @class = "text-danger" })
+                            @Html.DropDownList("MA_DT", (IEnumerable<SelectListItem>)ViewBag.Ages, "---Chọn độ tuổi--", new { @class = "form-control", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(model => model.MA_DT, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -152,6 +161,13 @@
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.SL_TON, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                             @Html.ValidationMessageFor(model => model.SL_TON, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Số lượng đã bán</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.SL_BAN, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.SL_BAN, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">

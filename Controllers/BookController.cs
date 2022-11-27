@@ -29,7 +29,7 @@ namespace QLNS.Controllers
         {
             int PageSize = 8;
             int PageNumber = (page ?? 1);
-            return db.SACHes.OrderBy(x => x.MA_SACH).ToPagedList(PageNumber, PageSize);
+            return db.SACHes.Where(x=> x.DELETED_AT == null).OrderBy(x => x.MA_SACH).ToPagedList(PageNumber, PageSize);
         }
         //Danh sach san pham sach
         public ActionResult Index(int? page)
@@ -44,7 +44,7 @@ namespace QLNS.Controllers
         private List<SelectListItem> GetGenres()
         {
             var listGenre = new List<SelectListItem>();
-            listGenre = db.THE_LOAI.Select(t => new SelectListItem()
+            listGenre = db.THE_LOAI.Where(x => x.DELETED_AT == null).Select(t => new SelectListItem()
             {
                 Value = t.MA_TL.ToString(),
                 Text = t.TEN_TL
@@ -56,7 +56,7 @@ namespace QLNS.Controllers
         private List<SelectListItem> GetTypes()
         {
             var listType = new List<SelectListItem>();
-            listType = db.DANG_SACH.Select(t => new SelectListItem()
+            listType = db.DANG_SACH.Where(x => x.DELETED_AT == null).Select(t => new SelectListItem()
             {
                 Value = t.MA_DS.ToString(),
                 Text = t.TEN_DS
@@ -64,6 +64,19 @@ namespace QLNS.Controllers
 
             return listType;
         }
+        //Lay ds do duoi
+        private List<SelectListItem> GetAges()
+        {
+            var listAge = new List<SelectListItem>();
+            listAge = db.DO_TUOI.Where(x => x.DELETED_AT == null).Select(t => new SelectListItem()
+            {
+                Value = t.MA_DT.ToString(),
+                Text = t.TEN_DT
+            }).ToList();
+
+            return listAge;
+        }
+
         //Thong tin chi tiet
         public ActionResult Details(string id)
         {
@@ -72,7 +85,7 @@ namespace QLNS.Controllers
             {
                 return RedirectToAction("Index");
             }
-            SACH sach = db.SACHes.SingleOrDefault(s => s.MA_SACH == id);
+            SACH sach = db.SACHes.SingleOrDefault(s => s.MA_SACH == id && s.DELETED_AT == null);
             if (sach == null)
             {
                 Response.StatusCode = 404;
@@ -81,6 +94,7 @@ namespace QLNS.Controllers
 
             ViewBag.Genres = GetGenres();
             ViewBag.Types = GetTypes();
+            ViewBag.Ages = GetAges();
 
             return View(sach);
         }
@@ -114,13 +128,14 @@ namespace QLNS.Controllers
             if (IsLogin() != null) return IsLogin();
             ViewBag.Genres = GetGenres();
             ViewBag.Types = GetTypes();
+            ViewBag.Ages = GetAges();
 
             return View();
         }
         //POST Them sach
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SACH sach, HttpPostedFileBase fileUpload)
+        public ActionResult Create(SACH sach, String SO_TIEN, HttpPostedFileBase fileUpload)
         {
             if (IsLogin() != null) return IsLogin();
             var dup = db.SACHes.SingleOrDefault(s => s.MA_SACH == sach.MA_SACH);
@@ -130,7 +145,14 @@ namespace QLNS.Controllers
                     if (ModelState.IsValid)
                     {
                         sach.ANH_BIA = UploadFile(fileUpload, sach.MA_SACH);
+                        DON_GIA dg = new DON_GIA
+                        {
+                            SO_TIEN = int.Parse(SO_TIEN),
+                            NGAY_AP_DUNG = DateTime.Now,
+                            SACH = sach
+                        };
                         db.SACHes.Add(sach);
+                        db.DON_GIA.Add(dg);
                         db.SaveChanges();
                     }
                     else
@@ -156,9 +178,17 @@ namespace QLNS.Controllers
         //POST Sua thong tin
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string MA_SACH, HttpPostedFileBase fileUpload)
+        public ActionResult Edit(string MA_SACH, String SO_TIEN, HttpPostedFileBase fileUpload)
         {
             var sachSua = db.SACHes.Find(MA_SACH);
+            DON_GIA dg = new DON_GIA
+            {
+                SO_TIEN = int.Parse(SO_TIEN),
+                NGAY_AP_DUNG = DateTime.Now,
+                SACH = sachSua
+            };
+            db.DON_GIA.Add(dg);
+
             sachSua.ANH_BIA = UploadFile(fileUpload, MA_SACH);
             string path = db.SACHes.Where(s => s.MA_SACH == MA_SACH).Select(s => s.ANH_BIA).Single();
             if (sachSua.ANH_BIA != null)
@@ -166,7 +196,7 @@ namespace QLNS.Controllers
                 DeleteFile(path);
             }
             else sachSua.ANH_BIA = path;
-            if (TryUpdateModel(sachSua, "", new string[] { "TEN_SACH", "ANH_BIA", "MA_DS", "MA_TL", "GIA_BAN", "TAC_GIA", "NHA_XB", "NAM_XB", "SOLUONG", "MO_TA_SACH" }))
+            if (TryUpdateModel(sachSua, "", new string[] { "TEN_SACH", "ANH_BIA", "MA_DS", "MA_TL", "MA_DT", "TAC_GIA", "NHA_XB", "NAM_XB", "SL_TON", "SL_BAN",  "MO_TA_SACH" }))
             {
                 if (ModelState.IsValid)
                 {
@@ -192,7 +222,8 @@ namespace QLNS.Controllers
             if (IsLogin() != null) return IsLogin();
             //Xoa sach
             SACH sach = db.SACHes.SingleOrDefault(s => s.MA_SACH == id);
-            db.SACHes.Remove(sach);
+            sach.DELETED_AT = DateTime.Now;
+            //db.SACHes.Remove(sach);
 
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -203,11 +234,12 @@ namespace QLNS.Controllers
             if (term == null) return Redirect("/");
             if (page == null) page = 1;
             var s = term.ToLower();
-            var result = db.SACHes
-                            .Where(b => b.MA_SACH.ToLower().Contains(s) ||
-                                   b.TEN_SACH.ToLower().Contains(s) ||
-                                   b.TAC_GIA.ToLower().Contains(s) ||
-                                   b.NHA_XB.ToLower().Contains(s))
+            var sachs = db.SACHes.Where(x => x.DELETED_AT == null);
+            var result = sachs.Where(b => b.MA_SACH.ToLower().Contains(s) ||
+                                    b.TEN_SACH.ToLower().Contains(s) ||
+                                    b.TAC_GIA.ToLower().Contains(s) ||
+                                    b.NHA_XB.ToLower().Contains(s)
+                                  )
                             .OrderBy(x => x.MA_SACH)
                             .ToList();
             int PageSize = 8;

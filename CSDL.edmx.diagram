@@ -4,37 +4,44 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3898105e9c944cb3856050598821deb5" Name="Diagram1">
-        <EntityTypeShape EntityType="CSDLModel.CHI_TIET_HOA_DON" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.CHI_TIET_NHAP_HANG" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.CHUC_VU" Width="1.5" PointX="3.75" PointY="24.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.CO_CV" Width="1.5" PointX="6" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.DANG_SACH" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.DO_TUOI" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.DON_GIA" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.DON_NHAP_HANG" Width="1.5" PointX="3" PointY="16.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.HOA_DON" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.KHUYEN_MAI" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.NHA_CUNG_CAP" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.NHAN_VIEN" Width="1.5" PointX="0.75" PointY="18.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.SACH" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.TAI_KHOAN" Width="1.5" PointX="3" PointY="21.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSDLModel.THE_LOAI" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
+      <Diagram DiagramId="ad12635d808e4877a64b8abfc870cdc4" Name="Diagram1">
+        <EntityTypeShape EntityType="CSDLModel.CHI_TIET_HOA_DON" Width="1.5" PointX="4.625" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.CHI_TIET_KHUYEN_MAI" Width="1.5" PointX="10.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.CHI_TIET_NHAP_HANG" Width="1.5" PointX="9.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.CHUC_VU" Width="1.5" PointX="2.625" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.CO_CV" Width="1.5" PointX="5.375" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.DANG_SACH" Width="1.5" PointX="2.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.DO_TUOI" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.DON_GIA" Width="1.5" PointX="2.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.DON_NHAP_HANG" Width="1.5" PointX="13.125" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.HOA_DON" Width="1.5" PointX="0.625" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.KHUYEN_MAI" Width="1.5" PointX="13.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.NHA_CUNG_CAP" Width="1.5" PointX="13.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.NHAN_VIEN" Width="1.5" PointX="8.125" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.SACH" Width="1.5" PointX="7.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.TAI_KHOAN" Width="1.5" PointX="11" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSDLModel.THE_LOAI" Width="1.5" PointX="0.5" PointY="2.875" IsExpanded="true" />
         <AssociationConnector Association="CSDLModel.FK_CHI_TIET_HOA_DON_HOA_DON" ManuallyRouted="false" />
-        <AssociationConnector Association="CSDLModel.FK_CHI_TIET_HOA_DON_SACH" ManuallyRouted="false" />
+        <AssociationConnector Association="CSDLModel.FK_CHI_TIET_HOA_DON_SACH" ManuallyRouted="true" >
+          <ConnectorPoint PointX="7.6249995000000013" PointY="5.3648079427083379" />
+          <ConnectorPoint PointX="7.6249995000000013" PointY="6.370029296875" />
+          <ConnectorPoint PointX="6.125" PointY="6.370029296875" />
+        </AssociationConnector>
+        <AssociationConnector Association="CSDLModel.FK_CHI_TIET_KHUYEN_MAI_KHUYEN_MAI" ManuallyRouted="false" />
+        <AssociationConnector Association="CSDLModel.FK_CHI_TIET_KHUYEN_MAI_SACH" ManuallyRouted="false" />
         <AssociationConnector Association="CSDLModel.FK_CHI_TIET_DON_NHAP_DON_NHAP_HANG" ManuallyRouted="false" />
         <AssociationConnector Association="CSDLModel.FK_CHI_TIET_DON_NHAP_SACH" ManuallyRouted="false" />
         <AssociationConnector Association="CSDLModel.FK_CO_CV_CHUC_VU" ManuallyRouted="false" />
         <AssociationConnector Association="CSDLModel.FK_CO_CV_NHAN_VIEN" ManuallyRouted="false" />
         <AssociationConnector Association="CSDLModel.FK_SACH_DANG_SACH" ManuallyRouted="false" />
         <AssociationConnector Association="CSDLModel.FK_SACH_DO_TUOI" ManuallyRouted="false" />
-        <AssociationConnector Association="CSDLModel.FK_DON_GIA_SACH" ManuallyRouted="false" />
+        <AssociationConnector Association="CSDLModel.FK_DON_GIA_SACH" ManuallyRouted="false" >
+        </AssociationConnector>
         <AssociationConnector Association="CSDLModel.FK_DON_NHAP_HANG_NHA_CUNG_CAP" ManuallyRouted="false" />
         <AssociationConnector Association="CSDLModel.FK_DON_NHAP_HANG_NHAN_VIEN" ManuallyRouted="false" />
         <AssociationConnector Association="CSDLModel.FK_HOA_DON_NHAN_VIEN" ManuallyRouted="false" />
         <AssociationConnector Association="CSDLModel.FK_TAI_KHOAN_NHAN_VIEN" ManuallyRouted="false" />
         <AssociationConnector Association="CSDLModel.FK_SACH_THE_LOAI" ManuallyRouted="false" />
-        <AssociationConnector Association="CSDLModel.CHI_TIET_KHUYEN_MAI" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

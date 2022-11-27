@@ -12,19 +12,13 @@ namespace QLNS
     using System;
     using System.Collections.Generic;
     
-    public partial class DO_TUOI
+    public partial class CHI_TIET_KHUYEN_MAI
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DO_TUOI()
-        {
-            this.SACHes = new HashSet<SACH>();
-        }
-    
-        public string MA_DT { get; set; }
-        public string TEN_DT { get; set; }
+        public string MA_KM { get; set; }
+        public string MA_SACH { get; set; }
         public Nullable<System.DateTime> DELETED_AT { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SACH> SACHes { get; set; }
+        public virtual KHUYEN_MAI KHUYEN_MAI { get; set; }
+        public virtual SACH SACH { get; set; }
     }
 }

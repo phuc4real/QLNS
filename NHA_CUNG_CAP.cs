@@ -25,6 +25,7 @@ namespace QLNS
         public string DIACHI { get; set; }
         public string LIENLAC { get; set; }
         public Nullable<int> TONG_NHAP { get; set; }
+        public Nullable<System.DateTime> DELETED_AT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DON_NHAP_HANG> DON_NHAP_HANG { get; set; }

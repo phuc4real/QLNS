@@ -18,9 +18,9 @@ namespace QLNS
         public SACH()
         {
             this.CHI_TIET_HOA_DON = new HashSet<CHI_TIET_HOA_DON>();
+            this.CHI_TIET_KHUYEN_MAI = new HashSet<CHI_TIET_KHUYEN_MAI>();
             this.CHI_TIET_NHAP_HANG = new HashSet<CHI_TIET_NHAP_HANG>();
             this.DON_GIA = new HashSet<DON_GIA>();
-            this.KHUYEN_MAI = new HashSet<KHUYEN_MAI>();
         }
     
         public string MA_SACH { get; set; }
@@ -35,9 +35,12 @@ namespace QLNS
         public Nullable<System.DateTime> NAM_XB { get; set; }
         public Nullable<int> SL_BAN { get; set; }
         public Nullable<int> SL_TON { get; set; }
+        public Nullable<System.DateTime> DELETED_AT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHI_TIET_HOA_DON> CHI_TIET_HOA_DON { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CHI_TIET_KHUYEN_MAI> CHI_TIET_KHUYEN_MAI { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHI_TIET_NHAP_HANG> CHI_TIET_NHAP_HANG { get; set; }
         public virtual DANG_SACH DANG_SACH { get; set; }
@@ -45,7 +48,5 @@ namespace QLNS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DON_GIA> DON_GIA { get; set; }
         public virtual THE_LOAI THE_LOAI { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<KHUYEN_MAI> KHUYEN_MAI { get; set; }
     }
 }

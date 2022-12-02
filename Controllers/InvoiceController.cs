@@ -27,5 +27,13 @@ namespace QLNS.Controllers
             if (IsLogin() != null) return IsLogin();
             return View(db.HOA_DON.Where(x => x.DELETED_AT == null).ToList());
         }
+
+        public ActionResult Details(int id)
+        {
+            if (IsLogin() != null) return IsLogin();
+            var list = db.CHI_TIET_HOA_DON.Where(s => s.MA_HD == id).OrderBy(x => x.MA_HD);
+
+            return View(list);
+        }
     }
 }

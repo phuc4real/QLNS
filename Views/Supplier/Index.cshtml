@@ -5,30 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script>
-    function submitResult(e, id) {
-        e.preventDefault();
-        Swal.fire({
-            title: 'Xác nhận',
-            text: "Xóa nhà cung cấp?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Xác nhận!',
-            cancelButtonText: 'Hủy'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Đã xóa!',
-                    'Nhà cung cấp đã được xoá.',
-                    'success'
-                ).then((result) => document.getElementById("Delete" + id).submit())
-            }
-        })
-    }
-</script>
-
 <section class="page-section">
     <div class="container">
         <div class="d-flex">
@@ -47,33 +23,37 @@
                     <th><h5>Tên nhà cung cấp</h5></th>
                     <th><h5>Địa chỉ</h5></th>
                     <th><h5>Thông tin liên lạc</h5></th>
+                    <th><h5>Tổng nhập</h5></th>
                     <th><h5>Công cụ</h5></th>
                 </tr>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MA_NCC)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TEN_NCC)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DIACHI)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LIENLAC)
-                        </td>
-                        <td class="d-flex align-items-center">
-                            <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="/Genre/Edit/@item.MA_NCC"><i class="fa-regular fa-pen-to-square"></i></a>
-                            @using (Html.BeginForm("Delete", "Supplier", FormMethod.Post, new { id = "Delete" + item.MA_NCC }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" value="@item.MA_NCC" name="id" id="id" />
-                                <a role="button" class="tool" onclick="return submitResult(event,'@item.MA_NCC')"><i class="fa-solid fa-trash"></i></a>
-                            }
-                        </td>
-                    </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MA_NCC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TEN_NCC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DIACHI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LIENLAC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TONG_NHAP)
+                </td>
+                <td class="d-flex align-items-center">
+                    <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="/Supplier/Edit/@item.MA_NCC"><i class="fa-regular fa-pen-to-square"></i></a>
+                    @using (Html.BeginForm("Delete", "Supplier", FormMethod.Post, new { id = "Delete" + item.MA_NCC }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" value="@item.MA_NCC" name="id" id="id" />
+                        <a role="button" class="tool" onclick="return submitResult(event,'@item.MA_NCC','Nhà cung cấp')"><i class="fa-solid fa-trash"></i></a>
+                    }
+                </td>
+            </tr>
                 }
             </table>
         </div>

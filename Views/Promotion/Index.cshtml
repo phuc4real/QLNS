@@ -6,40 +6,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script>
-    function submitResult(e, id) {
-        e.preventDefault();
-        Swal.fire({
-            title: 'Xác nhận',
-            text: "Xóa khuyến mãi?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Xác nhận!',
-            cancelButtonText: 'Hủy'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Đã xóa!',
-                    'Khuyến mãi đã được xoá.',
-                    'success'
-                ).then((result) => document.getElementById("Delete" + id).submit())
-            }
-        })
-    }
-</script>
-
 <section class="page-section">
     <div class="container">
         <div class="d-flex">
             <div class="flex-grow-1">
-                <h2>Quản lý khuyến mãi</h2>
+                <h2>Danh sách khuyến mãi</h2>
             </div>
             @if (SessionHelper.GetPermission() != "user")
              {
                 <div class="d-flex p-1">
-                    <a class="btn btn-outline-success ms-1" href="/Supplier/Create">Thêm</a>
+                    <a class="btn btn-outline-success ms-1" href="/Promotion/Create">Thêm</a>
                 </div>
              }
         </div>
@@ -57,35 +33,39 @@
                 </tr>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MA_KM)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TEN_KM)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.BAT_DAU)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.KET_THUC)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TI_LE_GIAM)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DIEU_KIEN)
-                        </td>
-                        <td class="d-flex align-items-center">
-                            <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="/Genre/Edit/@item.MA_KM"><i class="fa-regular fa-pen-to-square"></i></a>
-                            @using (Html.BeginForm("Delete", "Supplier", FormMethod.Post, new { id = "Delete" + item.MA_KM }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" value="@item.MA_KM" name="id" id="id" />
-                                <a role="button" class="tool" onclick="return submitResult(event,'@item.MA_KM')"><i class="fa-solid fa-trash"></i></a>
-                            }
-                        </td>
-                    </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MA_KM)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TEN_KM)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BAT_DAU)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KET_THUC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TI_LE_GIAM)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DIEU_KIEN)
+                </td>
+                <td class="d-flex align-items-center">
+                    @if (SessionHelper.GetPermission() != "user")
+                    {
+                        <a class="tool" data-toggle="tooltip" title="Chỉnh sửa" href="/Promotion/Edit/@item.MA_KM"><i class="fa-regular fa-pen-to-square"></i></a>
+                        using (Html.BeginForm("Delete", "Promotion", FormMethod.Post, new { id = "Delete" + item.MA_KM }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" value="@item.MA_KM" name="id" id="id" />
+                            <a role="button" class="tool" onclick="return submitResult(event,'@item.MA_KM','Khuyến mãi')"><i class="fa-solid fa-trash"></i></a>
+                        }
+                    }
+                    <a class="tool" data-toggle="tooltip" title="Sản phẩm áp dụng" href="/Sale/BookOnSale/@item.MA_KM"><i class="fa-solid fa-cart-shopping"></i></a>
+                </td>
+            </tr>
                 }
             </table>
         </div>

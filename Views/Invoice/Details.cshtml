@@ -1,0 +1,64 @@
+﻿@model IEnumerable<QLNS.CHI_TIET_HOA_DON>
+
+@{
+    ViewBag.Title = "Chi tiết hoá đơn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    double total = 0;
+    double price = 0;
+}
+
+<section class="page-section">
+    <div class="container">
+        <div class="d-flex">
+            <div class="flex-grow-1">
+                <h2>Chi tiết hoá đơn</h2>
+            </div>
+            <a class="btn btn-outline-info ms-1 d-flex align-items-center" href="/Invoice"><i class="fa-solid fa-arrow-left p-1"></i> Trở về</a>
+        </div>
+        <div class="row m-3 border-bottom border-info"></div>
+        <div class="row border-dark">
+
+            <table class="table">
+                <thead>
+                    <tr class="text-center">
+                        <th><h5>Sách</h5></th>
+                        <th><h5>Số lượng</h5></th>
+                        <th><h5>Đơn giá</h5></th>
+                        <th><h5>Thành tiền</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        price = (double)item.SL_SACH* (double)item.SACH.DON_GIA.OrderByDescending(e => e.MA_DG).DefaultIfEmpty().First().SO_TIEN;
+                        total += price;
+                        <tr class="text-center fs-5">
+                            <td class="detailInvoice_img">
+                                @if (item.SACH.ANH_BIA != null)
+                                {
+                                    <img src="@Url.Content("~/Assets/img/book/"+item.SACH.ANH_BIA)" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/Assets/img/book/default.jpg")" />
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SL_SACH)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SACH.DON_GIA.OrderByDescending(e => e.MA_DG).DefaultIfEmpty().First().SO_TIEN)
+                            </td>
+                            <td>
+                                @price.ToString("#,###.## vnđ")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="left">
+                <h4>Tổng : @total.ToString("#,###.## vnđ")</h4>
+            </div>
+        </div>
+    </div>
+</section>

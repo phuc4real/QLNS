@@ -234,6 +234,7 @@ namespace QLNS.Controllers
                 THANH_TIEN = Total
             };
             db.HOA_DON.Add(hd);
+            db.SaveChanges();
 
             //Them chi tiet hoa don
             foreach (CartItem item in cart)
@@ -245,13 +246,32 @@ namespace QLNS.Controllers
                     SL_SACH = item.Quantity
                 };
                 db.CHI_TIET_HOA_DON.Add(cthd);
-                
+                SACH sach = db.SACHes.Find(cthd.MA_SACH);
+                sach.SL_BAN+=cthd.SL_SACH;
+                sach.SL_TON -= cthd.SL_SACH;
+
+                db.SaveChanges();
             }
 
-            db.SaveChanges();
             Session.Remove("ShoppingCart");
 
             return Redirect("/Invoice");
+        }
+
+        public ActionResult BookOnSale(string id, int? page)
+        {
+            if (IsLogin() != null) return IsLogin();
+            if (id == null) return RedirectToAction("Index");
+            if (page == null) page = 1;;
+            List<CHI_TIET_KHUYEN_MAI> list = db.CHI_TIET_KHUYEN_MAI.Where(x =>x.DELETED_AT == null && x.MA_KM == id).ToList();
+            List<SACH> sach = new List<SACH>();
+            foreach (CHI_TIET_KHUYEN_MAI item in list)
+            {
+                sach.Add(item.SACH);
+            }
+            int PageSize = 8;
+            int PageNumber = (page ?? 1);
+            return View(sach.ToPagedList(PageNumber, PageSize));
         }
     }
 }

@@ -5,42 +5,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<section class="page-section">
+    <div class="container">
+        <div class="d-flex">
+            <div class="flex-grow-1">
+                <h2>Danh sách hoá đơn</h2>
+            </div>
+        </div>
+        <div class="row m-3 border-bottom border-info"></div>
+        <div class="row border-dark">
+            <table class="table table-hover">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MA_HD)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MA_NV)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NGAY_LAP)
+                    </th>
+                    <th></th>
+                </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MA_HD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MA_NV)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NGAY_LAP)
-        </th>
-        <th></th>
-    </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MA_HD)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MA_NV)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NGAY_LAP)
+                        </td>
+                        <td>
+                            <a class="text-decoration-none" href="@Url.Action("Details","Invoice", new { id = item.MA_HD })">Chi tiết hoá đơn</a>
+                        </td>
+                    </tr>
+                }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MA_HD)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MA_NV)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NGAY_LAP)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
-
-</table>
+            </table>
+        </div>
+    </div>
+</section>

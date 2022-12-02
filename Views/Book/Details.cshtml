@@ -108,14 +108,14 @@
                     <div class="form-group">
                         <label>Nhà Xuất Bản</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.NHA_XB, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.EditorFor(model => model.NHA_XB, new { htmlAttributes = new {@class = "form-control", @readonly = true } })
                             @Html.ValidationMessageFor(model => model.NHA_XB, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Năm Xuất Bản</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.NAM_XB, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.EditorFor(model => model.NAM_XB, new { htmlAttributes = new {@class = "form-control datepicker", @readonly = true } })
                             @Html.ValidationMessageFor(model => model.NAM_XB, "", new { @class = "text-danger" })
                         </div>
                     </div>

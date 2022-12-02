@@ -1,0 +1,94 @@
+﻿@model PagedList.IPagedList<SACH>
+@using PagedList.Mvc;
+@using QLNS.Models;
+
+@{
+    ViewBag.Title = "Tìm sách";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if (Session["ShoppingCart"] != null)
+    {
+        int cartcount = 0;
+        List<CartItem> ls = (List<CartItem>)Session["ShoppingCart"];
+        foreach (CartItem item in ls)
+        {
+            cartcount += item.Quantity;
+        }
+        ViewBag.count = cartcount;
+    }
+    else
+    {
+        ViewBag.count = 0;
+    }
+}
+
+<section class="section-products">
+    <div class="container">
+        <div class="d-flex">
+            <div class="flex-grow-1">
+                <h2>Tìm kiếm sách</h2>
+            </div>
+            <div class="d-flex p-1">
+                @using (Html.BeginForm("SearchBook", "Sale", FormMethod.Post, new { @class = "d-flex" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="text" class="form-control" placeholder="Tìm kiếm" name="term" />
+                    <button class="btn btn-outline-success" type="submit">Tìm</button>
+
+                }
+            </div>
+            <a href="/Sale/ShoppingCart" class="ms-1">
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-total" id="Cart_Amount">@ViewBag.count</span>
+                </div>
+            </a>
+        </div>
+        <div class="row m-3 border-bottom border-info"></div>
+        <div class="row">
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div data-aos="zoom-in" class="single-product">
+                            <div class="part-1">
+                                @if (item.ANH_BIA != null)
+                                {
+                                    <img src="@Url.Content("~/Assets/img/book/"+item.ANH_BIA)" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/Assets/img/book/default.jpg")" />
+                                }
+                                <ul>
+                                    <li><a href="@Url.Action("Details","Sale", new { id = item.MA_SACH })"><i class="fas fa-expand"></i></a></li>
+                                    <li><a onclick="AddToCart('@item.MA_SACH')"><i class="fas fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="part-2">
+                                <h3 class="product-title">@Html.DisplayFor(modelItem => item.TEN_SACH)</h3>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div>
+                    <p class="lead fw-normal mb-2">Không tìm thấy sản phẩm, quý khách vui lòng thử lại!</p>
+                    <a href="/Sale" class="text-decoration-none d-flex align-items-center"><i class="fas fa-long-arrow-alt-left me-2"></i>Trở về trang sản phẩm</a>
+                </div>
+            }
+        </div>
+        <div class="d-flex flex-row-reverse">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+   {
+       DisplayLinkToIndividualPages = true,
+       DisplayPageCountAndCurrentLocation = false,
+       MaximumPageNumbersToDisplay = 3,
+       LiElementClasses = new string[] { "pagination-item" }
+   })
+        </div>
+    </div>
+</section>

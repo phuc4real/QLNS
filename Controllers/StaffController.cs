@@ -73,6 +73,7 @@ namespace QLNS.Controllers
             var dup = db.NHAN_VIEN.Where(s => s.MA_NV == nv.MA_NV).FirstOrDefault();
             if (dup == null)
             {
+                nv.NGAY_GIA_NHAP = DateTime.Now;
                 try
                 {
                     if (ModelState.IsValid)
@@ -90,21 +91,17 @@ namespace QLNS.Controllers
             ViewBag.error = "Mã nhân viên đã tồn tại";
             return View(nv);
         }
-        //GET Sua nhan vien
-        public ActionResult Edit(string id)
+        public ActionResult Detail(string id)
         {
             if (LoginPermission() != null) return LoginPermission();
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            NHAN_VIEN nv = db.NHAN_VIEN.Find(id);
-            if (nv == null)
-            {
-                return HttpNotFound();
-            }
+            NHAN_VIEN nv = db.NHAN_VIEN.Where(s => s.MA_NV == id).FirstOrDefault();
+
+            var listJob = new List<CO_CV>();
+            listJob = nv.CO_CV.ToList();
+            ViewBag.listJob = listJob;
             return View(nv);
         }
+
         //POST Sua nhan vien
         [HttpPost]
         [ValidateAntiForgeryToken]

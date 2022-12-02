@@ -5,29 +5,6 @@
     ViewBag.Title = "Nhân viên";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script>
-    function submitResult(e, id) {
-        e.preventDefault();
-        Swal.fire({
-            title: 'Xác nhận',
-            text: "Xóa nhân viên này?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Xác nhận!',
-            cancelButtonText: 'Hủy'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Đã xóa!',
-                    'Nhân viên đã được xoá.',
-                    'success'
-                ).then((result) => document.getElementById("Delete" + id).submit())
-            }
-        })
-    }
-</script>
 
 <section class="page-section">
     <div class="container">
@@ -76,15 +53,18 @@
                                             </div>
                                         </div>
                                         <div class="custom-item-button">
-                                            <a class="tool" data-toggle="tooltip" title="Sửa thông tin" href="/Staff/Edit/@item.MA_NV"><i class="fa-regular fa-pen-to-square"></i></a>
+
+
                                             @if (item.TAI_KHOAN.Count != 1)
                                             {<a class="tool" href="/Auth/Create/@item.MA_NV" data-toggle="tooltip" title="Tạo tài khoản"><i class="fa-regular fa-id-card"></i></a>}
                                             @using (Html.BeginForm("Delete", "Staff", FormMethod.Post, new { id = "Delete" + item.MA_NV }))
                                             {
                                                 @Html.AntiForgeryToken()
                                                 <input type="hidden" value="@item.MA_NV" name="id" id="id" />
-                                                <a role="button" class="tool" onclick="return submitResult(event,'@item.MA_NV')"><i class="fa-solid fa-trash"></i></a>
+                                                <a role="button" class="tool" onclick="return submitResult(event,'@item.MA_NV','Nhân viên')"><i class="fa-solid fa-trash"></i></a>
                                             }
+                                            <a class="tool" data-toggle="tooltip" title="Thông tin nhân viên" href="/Staff/Detail/@item.MA_NV"><i class="fa-regular fa-address-book"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

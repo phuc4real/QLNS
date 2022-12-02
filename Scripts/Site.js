@@ -107,3 +107,24 @@ function payResult(e) {
         }
     })
 }
+
+//Thong tin nhan vien
+//Sua thong tin sach
+function enableEditSI() {
+    $("#Edit_ButtonSI").removeAttr('hidden');
+    $('#enable_EditSI').attr('hidden', true);
+    $('#disable_EditSI').removeAttr('hidden');
+    $("#TEN_NV").removeAttr('readonly');
+    $("#NAM_SINH").removeAttr('readonly');
+    $("#NOI_SONG").removeAttr('readonly');
+    $("#SDT").removeAttr('readonly');
+}
+function disableEditSI() {
+    $("#Edit_ButtonSI").attr('hidden', true);
+    $('#enable_EditSI').removeAttr('hidden');
+    $('#disable_EditSI').attr('hidden', true);
+    $("#TEN_NV").attr('readonly', true);
+    $("#NAM_SINH").attr('readonly', true);
+    $("#NOI_SONG").attr('readonly', true);
+    $("#SDT").attr('readonly', true);
+}

@@ -344,7 +344,6 @@
     <Content Include="Views\Auth\ChangePassword.cshtml" />
     <Content Include="Views\Staff\Index.cshtml" />
     <Content Include="Views\Staff\Create.cshtml" />
-    <Content Include="Views\Staff\Edit.cshtml" />
     <Content Include="Views\Auth\Create.cshtml" />
     <Content Include="Views\Supplier\Index.cshtml" />
     <Content Include="Views\Book\Details.cshtml" />
@@ -357,6 +356,13 @@
     <Content Include="Views\Sale\ShoppingCart.cshtml" />
     <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\Import\Index.cshtml" />
+    <Content Include="Views\Invoice\Details.cshtml" />
+    <Content Include="Views\Staff\Detail.cshtml" />
+    <Content Include="Views\Supplier\Create.cshtml" />
+    <Content Include="Views\Supplier\Edit.cshtml" />
+    <Content Include="Views\Promotion\Create.cshtml" />
+    <Content Include="Views\Promotion\Edit.cshtml" />
+    <Content Include="Views\Sale\BookOnSale.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
